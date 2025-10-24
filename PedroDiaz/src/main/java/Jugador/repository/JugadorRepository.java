@@ -1,15 +1,15 @@
 package Jugador.repository;
 
-import Jugador.Model.Jugador;
+import Jugador.Model.Futbolista;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface JugadorRepository extends JpaRepository<Jugador, Long>{
+public interface JugadorRepository extends JpaRepository<Futbolista, Long>{
 
-    List<Jugador> findByEquipoId(Long equipoId);
+    List<Futbolista> findByEquipoId(Long equipoId);
 
-    List<Jugador> findByEdad(Long id);
+    List<Futbolista> findByEdad(Long id);
 
-    List<Jugador> findByPosicion(Long id);
+    List<Futbolista> findByPosicion(Long id);
 }

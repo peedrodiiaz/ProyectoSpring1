@@ -9,9 +9,10 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Builder
-public class Jugador extends Futbolista{
-    private String posicion;
-    private int golesMarcados;
 
+public class Portero extends Futbolista{
+
+    private int paradas;
+    private int porteriasACero;
 
 }

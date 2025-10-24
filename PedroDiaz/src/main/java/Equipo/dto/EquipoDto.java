@@ -1,7 +1,7 @@
 package Equipo.dto;
 
 import Equipo.Model.Equipo;
-import Jugador.Model.Jugador;
+import Jugador.Model.Futbolista;
 import lombok.*;
 
 import java.util.List;
@@ -34,9 +34,9 @@ public class EquipoDto {
                 .listJugadores(dto.getJugadoresIds() != null ?
                         dto.getJugadoresIds().stream()
                                 .map(id -> {
-                                    Jugador jugador = new Jugador();
-                                    jugador.setId(id);
-                                    return jugador;
+                                    Futbolista futbolista = new Futbolista();
+                                    futbolista.setId(id);
+                                    return futbolista;
                                 })
                                 .collect(Collectors.toList()) : null)
                 .build();

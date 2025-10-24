@@ -2,8 +2,7 @@ package Equipo.service;
 
 import Equipo.Model.Equipo;
 import Equipo.repository.EquipoRepository;
-import Jugador.Model.Jugador;
-import Jugador.dto.JugadorDto;
+import Jugador.Model.Futbolista;
 import Jugador.repository.JugadorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -46,12 +45,12 @@ public class EquipoService {
     }
 
 
-    public List <JugadorDto> getJugadoresByEquipoId(Long id){
-        List <Jugador>jugadoresDto= jugadorRepository.findByEquipoId(id);
-        return jugadoresDto.stream()
-                .map(Jugador::entityConverToDto )
-                .collect(Collectors.toList());
-    }
+//    public List <JugadorDto> getJugadoresByEquipoId(Long id){
+//        List <Futbolista>jugadoresDto= jugadorRepository.findByEquipoId(id);
+//        return jugadoresDto.stream()
+//                .map(Futbolista::entityConverToDto )
+//                .collect(Collectors.toList());
+//    }
 
 
 }

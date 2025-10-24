@@ -2,7 +2,7 @@ package Estadisticas.Model;
 
 
 import Estadisticas.dto.EstadisticasDto;
-import Jugador.Model.Jugador;
+import Jugador.Model.Futbolista;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +21,7 @@ public class Estadisticas {
 
     @ManyToOne
     @JoinColumn(name = "jugador_id")
-    private Jugador Jugador;
+    private Futbolista Futbolista;
 
     private double minJugados;
     private int goles;
@@ -34,7 +34,7 @@ public class Estadisticas {
     public static EstadisticasDto EntityconverToDto(Estadisticas estadisticas) {
         return EstadisticasDto.builder()
                 .id(estadisticas.getId())
-                .jugadorId(estadisticas.getJugador().getId())
+                .jugadorId(estadisticas.getFutbolista().getId())
                 .minJugados(estadisticas.getMinJugados())
                 .goles(estadisticas.getGoles())
                 .asistencias(estadisticas.getAsistencias())

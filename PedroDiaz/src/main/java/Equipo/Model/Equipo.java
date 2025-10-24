@@ -1,14 +1,13 @@
 package Equipo.Model;
 
 import Equipo.dto.EquipoDto;
-import Jugador.Model.Jugador;
+import Jugador.Model.Futbolista;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -25,7 +24,7 @@ public class Equipo {
 
     private String nombre;
     private String Categoria;
-    private List<Jugador> listJugadores;
+    private List<Futbolista> listJugadores;
     private String imgEquipo;
 
    public EquipoDto EntityconverToDto(Equipo equipo) {

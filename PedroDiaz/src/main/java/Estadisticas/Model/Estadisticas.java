@@ -1,6 +1,7 @@
 package Estadisticas.Model;
 
 
+import Estadisticas.dto.EstadisticasDto;
 import Jugador.Model.Jugador;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,6 +29,24 @@ public class Estadisticas {
     private int tarAmarilla;
     private  int tarRoja;
     private double calificacion;
+
+
+    public EstadisticasDto EntityconverToDto(Estadisticas estadisticas) {
+        return EstadisticasDto.builder()
+                .id(estadisticas.getId())
+                .jugadorId(estadisticas.getJugador().getId())
+                .minJugados(estadisticas.getMinJugados())
+                .goles(estadisticas.getGoles())
+                .asistencias(estadisticas.getAsistencias())
+                .tarAmarilla(estadisticas.getTarAmarilla())
+                .tarRoja(estadisticas.getTarRoja())
+                .calificacion(estadisticas.getCalificacion())
+                .build();
+    }
+
+
+
+
 
 
 }

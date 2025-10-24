@@ -31,7 +31,7 @@ public class Estadisticas {
     private double calificacion;
 
 
-    public EstadisticasDto EntityconverToDto(Estadisticas estadisticas) {
+    public static EstadisticasDto EntityconverToDto(Estadisticas estadisticas) {
         return EstadisticasDto.builder()
                 .id(estadisticas.getId())
                 .jugadorId(estadisticas.getJugador().getId())

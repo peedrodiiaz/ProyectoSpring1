@@ -58,6 +58,7 @@ public class JugadorService {
         return jugadorRepository.findByPosicion(id);
     }
 
+    
 
 
 

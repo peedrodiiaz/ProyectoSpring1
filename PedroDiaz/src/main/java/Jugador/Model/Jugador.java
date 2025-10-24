@@ -35,7 +35,7 @@ public class Jugador {
     private Equipo Equipo;
 
 
-    public JugadorDto entityConverToDto(Jugador jugador) {
+    public static JugadorDto entityConverToDto(Jugador jugador) {
         return JugadorDto.builder()
                 .id(jugador.getId())
                 .nombre(jugador.getNombre())

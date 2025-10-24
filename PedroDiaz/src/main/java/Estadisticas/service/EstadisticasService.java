@@ -3,6 +3,8 @@ package Estadisticas.service;
 
 import Equipo.repository.EquipoRepository;
 import Estadisticas.Model.Estadisticas;
+import Estadisticas.dto.EstadisticaResumenDto;
+import Estadisticas.dto.EstadisticasDto;
 import Estadisticas.repository.EstadisticasRepository;
 import Jugador.Model.Jugador;
 import Jugador.repository.JugadorRepository;
@@ -13,14 +15,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class EstadisticasService {
 
     private final JugadorService jugadorService;
+    private final  JugadorRepository jugadorRepository;
 
     private final EstadisticasRepository estadisticasRepository;
+    private final EquipoRepository equipoRepository;
 
     public List<Estadisticas> getAllEstadisticas() {
         return estadisticasRepository.findAll();
@@ -53,10 +58,47 @@ public class EstadisticasService {
         estadisticasRepository.deleteById(id);
     }
 
-    public List<Estadisticas> getEstadisticasByJugador(Long jugadorId) {
+    public List<EstadisticasDto> getEstadisticasByJugador(Long jugadorId) {
         Jugador jugador = jugadorService.findJugadorById(jugadorId);
-        return estadisticasRepository.findByJugador(jugador);
+        return estadisticasRepository.findByJugador(jugador)
+                .stream()
+                .map(Estadisticas::EntityconverToDto)
+                .collect(Collectors.toList());
     }
+
+
+    public EstadisticaResumenDto getResumenEstadisticasEquipo(Long equipoId) {
+        List <Jugador> jugadores = jugadorRepository.findByEquipoId(equipoId);
+        int totalGoles = 0, totalAsistencias = 0, totalTarjetasAmarillas = 0, totalTarjetasRojas = 0,totalPartidos = 0;
+        double totalMinJugados = 0.0, totalCalificacion = 0.0, mediaCalificacion = 0.0;
+        for (Jugador jugador : jugadores){
+            List <Estadisticas> estadisticasJugador = estadisticasRepository.findByJugador(jugador);
+            for (Estadisticas estadisticas : estadisticasJugador){
+                totalGoles += estadisticas.getGoles();
+                totalAsistencias += estadisticas.getAsistencias();
+                totalTarjetasAmarillas += estadisticas.getTarAmarilla();
+                totalTarjetasRojas += estadisticas.getTarRoja();
+                totalMinJugados += estadisticas.getMinJugados();
+                totalCalificacion += estadisticas.getCalificacion();
+                totalPartidos ++;
+        }}
+        mediaCalificacion= totalPartidos > 0 ? totalCalificacion / totalPartidos : 0.0;
+
+        return EstadisticaResumenDto.builder()
+                .equipoId(equipoId)
+                .totalGoles(totalGoles)
+                .totalAsistencias(totalAsistencias)
+                .totalTarAmarillas(totalTarjetasAmarillas)
+                .totalTarRojas(totalTarjetasRojas)
+                .totalMinJugados(totalMinJugados)
+                .mediaCalificacion(mediaCalificacion)
+                .build();
+
+    }
+
+
+
+
 
 
 }

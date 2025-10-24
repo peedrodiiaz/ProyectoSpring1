@@ -10,6 +10,7 @@ public class JugadorDto {
     private String apellidos;
 
     private String imgJugador;
+    private String posicion;
 
     private LocalDateTime fechaNacimiento;
 

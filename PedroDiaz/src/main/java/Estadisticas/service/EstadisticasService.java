@@ -26,7 +26,6 @@ public class EstadisticasService {
         return estadisticasRepository.findAll();
     }
 
-
     public Estadisticas findById(Long id) {
         return estadisticasRepository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("Estadística no encontrada"));

@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,4 +50,17 @@ public class JugadorService {
     public List<Jugador> findJugadoresByEquipo(Long equipoId) {
         return jugadorRepository.findByEquipoId(equipoId);
     }
+    public List<Jugador> findJugadorPorEdad(Long id){
+        return jugadorRepository.findByEdad(id);
+    }
+
+    public List<Jugador> findByPosicion(Long id){
+        return jugadorRepository.findByPosicion(id);
+    }
+
+
+
+
+
+
 }

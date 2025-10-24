@@ -8,4 +8,8 @@ import java.util.List;
 public interface JugadorRepository extends JpaRepository<Jugador, Long>{
 
     List<Jugador> findByEquipoId(Long equipoId);
+
+    List<Jugador> findByEdad(Long id);
+
+    List<Jugador> findByPosicion(Long id);
 }

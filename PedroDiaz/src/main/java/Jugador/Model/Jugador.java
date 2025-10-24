@@ -22,6 +22,7 @@ public class Jugador {
     private String nombre;
     private  String apellidos;
     private String imgJugador;
+    private String posicion;
     private LocalDateTime fechaNacimiento;
     private LocalDateTime fechaInicioContrato;
     private String nacionalidad;

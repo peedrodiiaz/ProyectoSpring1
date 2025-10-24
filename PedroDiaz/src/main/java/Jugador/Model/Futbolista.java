@@ -1,6 +1,8 @@
 package Jugador.Model;
 
 import Equipo.Model.Equipo;
+import Estadisticas.Model.Estadisticas;
+import Estadisticas.Model.EstadisticasJugador;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +30,9 @@ public abstract class Futbolista {
     private int numCamiseta;
     private double salarioMensualBase;
 
+    @OneToOne
+    @JoinColumn(name = "estadisticas_id")
+    private Estadisticas estadisticas;
     @ManyToOne
     @JoinColumn(name = "equipo_id")
     private Equipo Equipo;

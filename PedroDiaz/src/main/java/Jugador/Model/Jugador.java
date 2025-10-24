@@ -13,7 +13,6 @@ import lombok.*;
 @DiscriminatorValue("JUGADOR")
 public class Jugador extends Futbolista{
     private String posicion;
-    private int golesMarcados;
 
 
 

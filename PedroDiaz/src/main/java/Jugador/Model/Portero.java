@@ -12,7 +12,6 @@ import lombok.*;
 
 public class Portero extends Futbolista{
 
-    private int paradas;
-    private int porteriasACero;
+    private String piernaBuena;
 
 }

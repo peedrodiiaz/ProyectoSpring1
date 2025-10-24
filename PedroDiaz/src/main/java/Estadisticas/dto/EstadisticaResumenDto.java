@@ -15,5 +15,8 @@ public class EstadisticaResumenDto {
     private int totalTarRojas;
     private double totalMinJugados;
     private double mediaCalificacion;
+    private int totalPorteriasACero;
+    private int totalParadas;
+
 
 }

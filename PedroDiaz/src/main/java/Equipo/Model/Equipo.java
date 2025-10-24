@@ -27,8 +27,7 @@ public class Equipo {
     private String categoria;
     @OneToMany(mappedBy = "Equipo")
     @ToString.Exclude
-    @Builder.Default
-    private List<Futbolista> listJugadores;
+    private List<Futbolista> listFutbolistas;
     private String imgEquipo;
 
    public EquipoDto EntityconverToDto(Equipo equipo) {

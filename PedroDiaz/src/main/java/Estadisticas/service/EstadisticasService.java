@@ -3,6 +3,8 @@ package Estadisticas.service;
 
 import Equipo.repository.EquipoRepository;
 import Estadisticas.Model.Estadisticas;
+import Estadisticas.Model.EstadisticasJugador;
+import Estadisticas.Model.EstadisticasPortero;
 import Estadisticas.dto.EstadisticaResumenDto;
 import Estadisticas.dto.EstadisticasDto;
 import Estadisticas.repository.EstadisticasRepository;
@@ -13,6 +15,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,13 +45,25 @@ public class EstadisticasService {
     public Estadisticas updateEstadistica(Long id, Estadisticas estadisticaDetails) {
         Estadisticas estadistica = findById(id);
 
-        estadistica.setMinJugados(estadisticaDetails.getMinJugados());
-        estadistica.setGoles(estadisticaDetails.getGoles());
-        estadistica.setAsistencias(estadisticaDetails.getAsistencias());
-        estadistica.setTarAmarilla(estadisticaDetails.getTarAmarilla());
-        estadistica.setTarRoja(estadisticaDetails.getTarRoja());
-        estadistica.setCalificacion(estadisticaDetails.getCalificacion());
-        estadistica.setFutbolista(estadisticaDetails.getFutbolista());
+        if (estadistica instanceof  EstadisticasJugador && estadisticaDetails instanceof EstadisticasJugador) {
+            ((EstadisticasJugador) estadistica).setMinJugados(estadisticaDetails.getMinJugados());
+            ((EstadisticasJugador) estadistica).setAsistencias(((EstadisticasJugador) estadisticaDetails).getAsistencias());
+            ((EstadisticasJugador) estadistica).setTarAmarilla(estadisticaDetails.getTarAmarilla());
+            ((EstadisticasJugador) estadistica).setTarRoja(estadisticaDetails.getTarRoja());
+            ((EstadisticasJugador) estadistica).setCalificacion(estadisticaDetails.getCalificacion());
+            ((EstadisticasJugador) estadistica).setGoles(((EstadisticasJugador) estadisticaDetails).getGoles());
+
+        }
+        if (estadistica instanceof EstadisticasPortero && estadisticaDetails instanceof EstadisticasPortero) {
+            ((EstadisticasPortero) estadistica).setMinJugados(estadisticaDetails.getMinJugados());
+            ((EstadisticasPortero) estadistica).setTarAmarilla(estadisticaDetails.getTarAmarilla());
+            ((EstadisticasPortero) estadistica).setTarRoja(estadisticaDetails.getTarRoja());
+            ((EstadisticasPortero) estadistica).setCalificacion(estadisticaDetails.getCalificacion());
+            ((EstadisticasPortero) estadistica).setPorteriasACero(((EstadisticasPortero) estadisticaDetails).getPorteriasACero());
+            ((EstadisticasPortero) estadistica).setParadas(((EstadisticasPortero) estadisticaDetails).getParadas());
+        }
+
+
 
         return estadisticasRepository.save(estadistica);
     }
@@ -57,31 +72,42 @@ public class EstadisticasService {
         estadisticasRepository.deleteById(id);
     }
 
-    public List<EstadisticasDto> getEstadisticasByJugador(Long jugadorId) {
-        Futbolista futbolista = futbolistaService.findFutbolistaById(jugadorId);
-        return estadisticasRepository.findByFutbolista(futbolista)
-                .stream()
-                .map(Estadisticas::EntityconverToDto)
-                .collect(Collectors.toList());
+    public Estadisticas getEstadisticasByFutbolista(Long futbolistaId) {
+        Futbolista futbolista = futbolistaService.findFutbolistaById(futbolistaId);
+        return estadisticasRepository.findByFutbolista(futbolista);
     }
 
 
     public EstadisticaResumenDto getResumenEstadisticasEquipo(Long equipoId) {
-        List <Futbolista> jugadores = futbolistaService.findFutbolistaByEquipoId(equipoId);
-        int totalGoles = 0, totalAsistencias = 0, totalTarjetasAmarillas = 0, totalTarjetasRojas = 0,totalPartidos = 0;
-        double totalMinJugados = 0.0, totalCalificacion = 0.0, mediaCalificacion = 0.0;
-        for (Futbolista futbolista : jugadores){
-            List <Estadisticas> estadisticasJugador = estadisticasRepository.findByFutbolista(futbolista);
-            for (Estadisticas estadisticas : estadisticasJugador){
-                totalGoles += estadisticas.getGoles();
-                totalAsistencias += estadisticas.getAsistencias();
-                totalTarjetasAmarillas += estadisticas.getTarAmarilla();
-                totalTarjetasRojas += estadisticas.getTarRoja();
-                totalMinJugados += estadisticas.getMinJugados();
-                totalCalificacion += estadisticas.getCalificacion();
-                totalPartidos ++;
-        }}
-        mediaCalificacion= totalPartidos > 0 ? totalCalificacion / totalPartidos : 0.0;
+        List<Futbolista> futbolistas = futbolistaService.findFutbolistaByEquipoId(equipoId);
+
+        int totalGoles = 0, totalAsistencias = 0, totalTarjetasAmarillas = 0, totalTarjetasRojas = 0, totalPartidos = 0;
+        int totalPorteriasACero = 0, totalParadas = 0;
+        double totalMinJugados = 0.0, totalCalificacion = 0.0;
+
+        for (Futbolista futbolista : futbolistas) {
+            List<Estadisticas> estadisticasList = Collections.singletonList(estadisticasRepository.findByFutbolista(futbolista));
+
+            for (Estadisticas estadistica : estadisticasList) {
+                totalMinJugados += estadistica.getMinJugados();
+                totalTarjetasAmarillas += estadistica.getTarAmarilla();
+                totalTarjetasRojas += estadistica.getTarRoja();
+                totalCalificacion += estadistica.getCalificacion();
+                totalPartidos++;
+
+                if (estadistica instanceof EstadisticasJugador ej) {
+                    totalGoles += ej.getGoles();
+                    totalAsistencias += ej.getAsistencias();
+                }
+
+                if (estadistica instanceof EstadisticasPortero ep) {
+                    totalPorteriasACero += ep.getPorteriasACero();
+                    totalParadas += ep.getParadas();
+                }
+            }
+        }
+
+        double mediaCalificacion = totalPartidos > 0 ? totalCalificacion / totalPartidos : 0.0;
 
         return EstadisticaResumenDto.builder()
                 .equipoId(equipoId)
@@ -91,8 +117,10 @@ public class EstadisticasService {
                 .totalTarRojas(totalTarjetasRojas)
                 .totalMinJugados(totalMinJugados)
                 .mediaCalificacion(mediaCalificacion)
+                .totalPorteriasACero(totalPorteriasACero)
+                .totalParadas(totalParadas)
                 .build();
-
+    }
     }
 
 
@@ -100,4 +128,7 @@ public class EstadisticasService {
 
 
 
-}
+
+
+
+

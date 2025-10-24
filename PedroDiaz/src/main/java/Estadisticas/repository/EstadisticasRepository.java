@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EstadisticasRepository extends JpaRepository<Estadisticas , Long> {
-    List<Estadisticas> findByFutbolista(Futbolista futbolista);
+    Estadisticas findByFutbolista(Futbolista futbolista);
 }

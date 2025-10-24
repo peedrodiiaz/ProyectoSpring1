@@ -32,8 +32,6 @@ public class EstadisticasDto {
         return Estadisticas.builder()
                 .id(dto.getId())
                 .minJugados(dto.getMinJugados())
-                .goles(dto.getGoles())
-                .asistencias(dto.getAsistencias())
                 .tarAmarilla(dto.getTarAmarilla())
                 .tarRoja(dto.getTarRoja())
                 .calificacion(dto.getCalificacion())

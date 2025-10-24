@@ -1,6 +1,13 @@
 package Jugador.service;
 
+import Estadisticas.Model.Estadisticas;
+import Estadisticas.Model.EstadisticasJugador;
+import Estadisticas.Model.EstadisticasPortero;
+import Estadisticas.dto.EstadisticasDto;
+import Estadisticas.service.EstadisticasService;
 import Jugador.Model.Futbolista;
+import Jugador.Model.Jugador;
+import Jugador.Model.Portero;
 import Jugador.repository.FutbolistaRepository;
 import Jugador.repository.JugadorRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,6 +21,7 @@ import java.util.List;
 public class FutbolistaService {
     private final JugadorRepository jugadorRepository;
     private final FutbolistaRepository futbolistaRepository;
+    private final EstadisticasService estadisticasService;
 
     public List<Futbolista> getAllFutbolistas() {
         return futbolistaRepository.findAll();
@@ -58,7 +66,28 @@ public class FutbolistaService {
         return futbolistaRepository.findByPosicion(id);
     }
 
-//    public double calcularExtrasSalario(Long id){}
+    public double calcularExtrasSalario(Long id){
+        int totalGoles = 0, totalAsistencias = 0;
+        double extras=0.0, golesBonus=1000, asistenciasBonus=500;
+        Futbolista futbolista = findFutbolistaById(id);
+        if (futbolista instanceof Jugador jugador){
+            Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
+            totalGoles = ((EstadisticasJugador)estadisticas).getGoles();
+            totalAsistencias = ((EstadisticasJugador)estadisticas).getAsistencias();
+             extras = (totalGoles * golesBonus) + (totalAsistencias * asistenciasBonus);
+            return extras;
+
+        }
+        if (futbolista instanceof Portero portero){
+            int totalPorteriasACero = 0;
+            double porteriasImbatidasBonus = 800;
+            Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
+            totalPorteriasACero = ((EstadisticasPortero)estadisticas).getPorteriasACero();
+            extras = totalPorteriasACero * porteriasImbatidasBonus;
+            return extras;
+        }
+        return extras;
+    }
 
 
 

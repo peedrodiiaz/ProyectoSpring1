@@ -20,13 +20,12 @@ public class Estadisticas {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "jugador_id")
+    @JoinColumn(name = "futbolista_id")
     @ToString.Exclude
     private Futbolista Futbolista;
 
     private double minJugados;
-    private int goles;
-    private int asistencias;
+
     private int tarAmarilla;
     private  int tarRoja;
     private double calificacion;
@@ -37,8 +36,6 @@ public class Estadisticas {
                 .id(estadisticas.getId())
                 .jugadorId(estadisticas.getFutbolista().getId())
                 .minJugados(estadisticas.getMinJugados())
-                .goles(estadisticas.getGoles())
-                .asistencias(estadisticas.getAsistencias())
                 .tarAmarilla(estadisticas.getTarAmarilla())
                 .tarRoja(estadisticas.getTarRoja())
                 .calificacion(estadisticas.getCalificacion())

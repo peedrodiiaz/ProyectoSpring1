@@ -3,7 +3,6 @@ package Jugador.service;
 import Estadisticas.Model.Estadisticas;
 import Estadisticas.Model.EstadisticasJugador;
 import Estadisticas.Model.EstadisticasPortero;
-import Estadisticas.dto.EstadisticasDto;
 import Estadisticas.service.EstadisticasService;
 import Jugador.Model.Futbolista;
 import Jugador.Model.Jugador;
@@ -66,7 +65,7 @@ public class FutbolistaService {
         return futbolistaRepository.findByPosicion(id);
     }
 
-    public double calcularExtrasSalario(Long id){
+    public double calcularSalarioConExtra(Long id){
         int totalGoles = 0, totalAsistencias = 0;
         double extras=0.0, golesBonus=1000, asistenciasBonus=500;
         Futbolista futbolista = findFutbolistaById(id);
@@ -86,7 +85,7 @@ public class FutbolistaService {
             extras = totalPorteriasACero * porteriasImbatidasBonus;
             return extras;
         }
-        return extras;
+        return extras+futbolista.getSalarioMensualBase();
     }
 
 

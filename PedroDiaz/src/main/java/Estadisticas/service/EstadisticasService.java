@@ -8,7 +8,7 @@ import Estadisticas.dto.EstadisticasDto;
 import Estadisticas.repository.EstadisticasRepository;
 import Jugador.Model.Futbolista;
 import Jugador.repository.JugadorRepository;
-import Jugador.service.JugadorService;
+import Jugador.service.FutbolistaService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EstadisticasService {
 
-    private final JugadorService jugadorService;
+    private final FutbolistaService futbolistaService;
     private final  JugadorRepository jugadorRepository;
 
     private final EstadisticasRepository estadisticasRepository;
@@ -58,8 +58,8 @@ public class EstadisticasService {
     }
 
     public List<EstadisticasDto> getEstadisticasByJugador(Long jugadorId) {
-        Futbolista futbolista = jugadorService.findJugadorById(jugadorId);
-        return estadisticasRepository.findByJugador(futbolista)
+        Futbolista futbolista = futbolistaService.findFutbolistaById(jugadorId);
+        return estadisticasRepository.findByFutbolista(futbolista)
                 .stream()
                 .map(Estadisticas::EntityconverToDto)
                 .collect(Collectors.toList());
@@ -67,11 +67,11 @@ public class EstadisticasService {
 
 
     public EstadisticaResumenDto getResumenEstadisticasEquipo(Long equipoId) {
-        List <Futbolista> jugadores = jugadorRepository.findByEquipoId(equipoId);
+        List <Futbolista> jugadores = futbolistaService.findFutbolistaByEquipoId(equipoId);
         int totalGoles = 0, totalAsistencias = 0, totalTarjetasAmarillas = 0, totalTarjetasRojas = 0,totalPartidos = 0;
         double totalMinJugados = 0.0, totalCalificacion = 0.0, mediaCalificacion = 0.0;
         for (Futbolista futbolista : jugadores){
-            List <Estadisticas> estadisticasJugador = estadisticasRepository.findByJugador(futbolista);
+            List <Estadisticas> estadisticasJugador = estadisticasRepository.findByFutbolista(futbolista);
             for (Estadisticas estadisticas : estadisticasJugador){
                 totalGoles += estadisticas.getGoles();
                 totalAsistencias += estadisticas.getAsistencias();

@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 @Builder
-@ToString
-
+@Inheritance (strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn (name = "tipo")
 public abstract class Futbolista {
 
     @Id
@@ -21,7 +21,7 @@ public abstract class Futbolista {
     private Long id;
     private String nombre;
     private  String apellidos;
-    private String imgJugador;
+    private String imgFutbolista;
     private LocalDate fechaNacimiento;
     private LocalDate fechaInicioContrato;
     private String nacionalidad;

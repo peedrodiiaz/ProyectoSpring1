@@ -21,6 +21,7 @@ public class Estadisticas {
 
     @ManyToOne
     @JoinColumn(name = "jugador_id")
+    @ToString.Exclude
     private Futbolista Futbolista;
 
     private double minJugados;

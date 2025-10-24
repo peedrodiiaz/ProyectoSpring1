@@ -5,6 +5,7 @@ import Jugador.Model.Futbolista;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.util.List;
@@ -23,7 +24,10 @@ public class Equipo {
     private Long id;
 
     private String nombre;
-    private String Categoria;
+    private String categoria;
+    @OneToMany(mappedBy = "Equipo")
+    @ToString.Exclude
+    @Builder.Default
     private List<Futbolista> listJugadores;
     private String imgEquipo;
 

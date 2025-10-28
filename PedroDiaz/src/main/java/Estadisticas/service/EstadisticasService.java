@@ -1,15 +1,12 @@
 package Estadisticas.service;
 
 
-import Equipo.repository.EquipoRepository;
 import Estadisticas.Model.Estadisticas;
 import Estadisticas.Model.EstadisticasJugador;
 import Estadisticas.Model.EstadisticasPortero;
 import Estadisticas.dto.EstadisticaResumenDto;
-import Estadisticas.dto.EstadisticasDto;
 import Estadisticas.repository.EstadisticasRepository;
 import Jugador.Model.Futbolista;
-import Jugador.repository.JugadorRepository;
 import Jugador.service.FutbolistaService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

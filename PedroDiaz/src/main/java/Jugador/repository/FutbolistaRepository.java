@@ -8,8 +8,5 @@ import java.util.List;
 public interface FutbolistaRepository extends JpaRepository<Futbolista,Long> {
 
     List<Futbolista> findByEquipoId(Long equipoId);
-    List<Futbolista> findByEdad(Long id);
-
-    List<Futbolista> findByPosicion(Long id);
 
 }

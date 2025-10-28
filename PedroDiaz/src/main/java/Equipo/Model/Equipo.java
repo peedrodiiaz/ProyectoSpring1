@@ -26,7 +26,7 @@ public class Equipo {
 
     private String nombre;
     private String categoria;
-    @OneToMany(mappedBy = "Equipo")
+    @OneToMany(mappedBy = "equipo")
     @ToString.Exclude
     private List<Futbolista> listFutbolistas;
     private String imgEquipo;

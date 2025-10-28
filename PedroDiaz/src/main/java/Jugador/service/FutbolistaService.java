@@ -10,17 +10,25 @@ import Jugador.Model.Portero;
 import Jugador.repository.FutbolistaRepository;
 import Jugador.repository.JugadorRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class FutbolistaService {
     private final JugadorRepository jugadorRepository;
     private final FutbolistaRepository futbolistaRepository;
     private final EstadisticasService estadisticasService;
+
+    public FutbolistaService(JugadorRepository jugadorRepository,
+                            FutbolistaRepository futbolistaRepository,
+                            @Lazy EstadisticasService estadisticasService) {
+        this.jugadorRepository = jugadorRepository;
+        this.futbolistaRepository = futbolistaRepository;
+        this.estadisticasService = estadisticasService;
+    }
 
     public List<Futbolista> getAllFutbolistas() {
         return futbolistaRepository.findAll();
@@ -57,13 +65,8 @@ public class FutbolistaService {
     public List<Futbolista> findFutbolistaByEquipoId(Long equipoId) {
         return futbolistaRepository.findByEquipoId(equipoId);
     }
-    public List<Futbolista> findJugadorPorEdad(Long id){
-        return futbolistaRepository.findByEdad(id);
-    }
 
-    public List<Futbolista> findByPosicion(Long id){
-        return futbolistaRepository.findByPosicion(id);
-    }
+
 
     public double calcularBonusSalario(Long id){
         int totalGoles = 0, totalAsistencias = 0;

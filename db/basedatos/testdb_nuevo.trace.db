@@ -1,0 +1,6 @@
+2025-10-28 20:14:23.784681+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "EQUIPO" not found (this database is empty); SQL statement:
+INSERT INTO equipo (id, nombre, categoria, img_equipo) VALUES (1, 'Real Betis Balompié', 'Primera División', '/img/equipos/betis.png'), (2, 'Betis Deportivo', 'Cantera', '/img/equipos/betis_deportivo.png'), (3, 'Real Betis Féminas', 'Liga F', '/img/equipos/betis_feminas.png') [42104-232]
+2025-10-28 20:15:41.343475+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "EQUIPO" not found (this database is empty); SQL statement:
+INSERT INTO equipo (id, nombre, categoria, img_equipo) VALUES (1, 'Real Betis Balompié', 'Primera División', '/img/equipos/betis.png'), (2, 'Betis Deportivo', 'Cantera', '/img/equipos/betis_deportivo.png'), (3, 'Real Betis Féminas', 'Liga F', '/img/equipos/betis_feminas.png') [42104-232]

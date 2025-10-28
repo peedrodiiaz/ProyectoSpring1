@@ -35,7 +35,7 @@ public abstract class Futbolista {
     private Estadisticas estadisticas;
     @ManyToOne
     @JoinColumn(name = "equipo_id")
-    private Equipo Equipo;
+    private Equipo equipo;
 
 
 //    public static FutbolistaDto entityConverToDto(Futbolista futbolista) {

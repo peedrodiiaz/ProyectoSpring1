@@ -8,19 +8,25 @@ import Jugador.Model.Futbolista;
 import Jugador.Model.Jugador;
 import Jugador.service.FutbolistaService;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class EquipoService {
 
     private final EquipoRepository equipoRepository;
     private final FutbolistaService futbolistaService;
     private final EstadisticasService estadisticasService;
+
+    public EquipoService(EquipoRepository equipoRepository, 
+                        @Lazy FutbolistaService futbolistaService, 
+                        @Lazy EstadisticasService estadisticasService) {
+        this.equipoRepository = equipoRepository;
+        this.futbolistaService = futbolistaService;
+        this.estadisticasService = estadisticasService;
+    }
 
     public List<Equipo> findAll(){
         return equipoRepository.findAll();

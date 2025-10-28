@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PedroDiazApplication<realbetis>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.salesianostriana.dam.realbetis.PedroDiazApplication",
+            "projectName": "realbetis",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

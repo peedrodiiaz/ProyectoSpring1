@@ -9,19 +9,23 @@ import Estadisticas.repository.EstadisticasRepository;
 import Jugador.Model.Futbolista;
 import Jugador.service.FutbolistaService;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class EstadisticasService {
 
     private final FutbolistaService futbolistaService;
-
     private final EstadisticasRepository estadisticasRepository;
+
+    public EstadisticasService(@Lazy FutbolistaService futbolistaService,
+                                EstadisticasRepository estadisticasRepository) {
+        this.futbolistaService = futbolistaService;
+        this.estadisticasRepository = estadisticasRepository;
+    }
 
     public List<Estadisticas> getAllEstadisticas() {
         return estadisticasRepository.findAll();

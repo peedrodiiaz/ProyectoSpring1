@@ -66,9 +66,9 @@ public class EquipoService {
 
     }
 
-    public List <Jugador> findMaxGoleadores(){
+    // public List <Jugador> findMaxGoleadores(){
         
-    }
+    // }
 
 
 

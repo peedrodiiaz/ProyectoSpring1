@@ -1,8 +1,9 @@
 package Equipo.dto;
 
 import Equipo.Model.Equipo;
-import Futbolista.Model.Futbolista;
-import Futbolista.repository.FutbolistaRepository;
+import Jugador.Model.Futbolista;
+import Jugador.Model.Jugador;
+import Jugador.repository.FutbolistaRepository;
 import lombok.*;
 
 import java.util.List;

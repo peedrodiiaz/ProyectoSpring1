@@ -1,7 +1,8 @@
 package Equipo.Model;
 
 import Equipo.dto.EquipoDto;
-import Futbolista.Model.Futbolista;
+import Jugador.Model.Futbolista;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

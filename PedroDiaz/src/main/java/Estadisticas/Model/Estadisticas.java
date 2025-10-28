@@ -2,7 +2,8 @@ package Estadisticas.Model;
 
 
 import Estadisticas.dto.EstadisticasDto;
-import Futbolista.Model.Futbolista;
+import Jugador.Model.Futbolista;
+import Jugador.Model.Jugador;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

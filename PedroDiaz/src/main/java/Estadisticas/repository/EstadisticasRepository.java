@@ -1,7 +1,8 @@
 package Estadisticas.repository;
 
 import Estadisticas.Model.Estadisticas;
-import Jugador.Model.Futbolista;
+import Futbolista.Model.Futbolista;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

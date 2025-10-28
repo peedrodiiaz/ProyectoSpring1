@@ -1,14 +1,14 @@
-package Jugador.service;
+package Futbolista.service;
 
 import Estadisticas.Model.Estadisticas;
 import Estadisticas.Model.EstadisticasJugador;
 import Estadisticas.Model.EstadisticasPortero;
 import Estadisticas.service.EstadisticasService;
-import Jugador.Model.Futbolista;
-import Jugador.Model.Jugador;
-import Jugador.Model.Portero;
-import Jugador.repository.FutbolistaRepository;
-import Jugador.repository.JugadorRepository;
+import Futbolista.Model.Futbolista;
+import Futbolista.Model.Jugador;
+import Futbolista.Model.Portero;
+import Futbolista.repository.FutbolistaRepository;
+import Futbolista.repository.JugadorRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -94,6 +94,9 @@ public class FutbolistaService {
 
         return extra+futbolista.getSalarioMensualBase();
     }
+    
+
+
 
 
 
@@ -101,3 +104,5 @@ public class FutbolistaService {
 
 
 }
+
+

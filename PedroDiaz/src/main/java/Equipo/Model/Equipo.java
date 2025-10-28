@@ -30,14 +30,14 @@ public class Equipo {
     private List<Futbolista> listFutbolistas;
     private String imgEquipo;
 
-   public EquipoDto EntityconverToDto(Equipo equipo) {
-       return EquipoDto.builder()
-               .id(equipo.getId())
-               .nombre(equipo.getNombre())
-               .categoria(equipo.getCategoria())
-               .imgEquipo(equipo.getImgEquipo())
-               .build();
-   }
+public EquipoDto EntityconverToDto(Equipo equipo) {
+    return EquipoDto.builder()
+            .id(equipo.getId())
+            .nombre(equipo.getNombre())
+            .categoria(equipo.getCategoria())
+            .imgEquipo(equipo.getImgEquipo())
+            .build();
+}
 
 
 }

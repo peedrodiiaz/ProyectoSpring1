@@ -17,17 +17,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class EstadisticasService {
 
     private final FutbolistaService futbolistaService;
-    private final  JugadorRepository jugadorRepository;
 
     private final EstadisticasRepository estadisticasRepository;
-    private final EquipoRepository equipoRepository;
 
     public List<Estadisticas> getAllEstadisticas() {
         return estadisticasRepository.findAll();

@@ -5,12 +5,13 @@ import Estadisticas.dto.EstadisticasDto;
 import Jugador.Model.Futbolista;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @ToString
 @Entity
 public class Estadisticas {

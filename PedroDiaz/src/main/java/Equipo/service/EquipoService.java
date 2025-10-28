@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 public class EquipoService {
 
     private final EquipoRepository equipoRepository;
-    private final JugadorRepository jugadorRepository;
 
     private List<Equipo> findAll(){
         return equipoRepository.findAll();
     }
+
 
     private Equipo findById (Long id){
         return equipoRepository.findById(id)
@@ -35,7 +35,7 @@ public class EquipoService {
         eq.setCategoria(equipoUpdate.getCategoria());
         eq.setImgEquipo(equipoUpdate.getImgEquipo());
         eq.setId(equipoUpdate.getId());
-        eq.setListJugadores(eq.getListJugadores());
+        eq.setListFutbolistas(equipoUpdate.getListFutbolistas());
         return equipoRepository.save(eq);
 
     }
@@ -43,14 +43,16 @@ public class EquipoService {
     public void deleteEquipo(Long id){
         equipoRepository.deleteById(id);
     }
+    public double calcularSalarioTotalEquipo(Long equipoId) {
+            Equipo equipo = findById(equipoId);
+            if (equipo.getListFutbolistas() == null) return 0.0;
+            return equipo.getListFutbolistas().stream()
+                    .mapToDouble(Futbolista::getSalarioMensualBase)
+                    .sum();
+        }
 
 
-//    public List <JugadorDto> getJugadoresByEquipoId(Long id){
-//        List <Futbolista>jugadoresDto= jugadorRepository.findByEquipoId(id);
-//        return jugadoresDto.stream()
-//                .map(Futbolista::entityConverToDto )
-//                .collect(Collectors.toList());
-//    }
+
 
 
 }

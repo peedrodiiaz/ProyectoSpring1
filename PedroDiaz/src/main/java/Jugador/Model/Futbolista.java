@@ -2,9 +2,9 @@ package Jugador.Model;
 
 import Equipo.Model.Equipo;
 import Estadisticas.Model.Estadisticas;
-import Estadisticas.Model.EstadisticasJugador;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder
+@SuperBuilder
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn (name = "tipo")
 public abstract class Futbolista {

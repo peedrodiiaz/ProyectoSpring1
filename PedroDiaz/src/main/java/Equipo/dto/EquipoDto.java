@@ -2,10 +2,13 @@ package Equipo.dto;
 
 import Equipo.Model.Equipo;
 import Jugador.Model.Futbolista;
+import Jugador.repository.FutbolistaRepository;
 import lombok.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Objects;
+
 
 @Getter
 @Setter
@@ -14,8 +17,10 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class EquipoDto {
 
-    private Long id;
+    private FutbolistaRepository futbolistaRepository;
+    
 
+    private Long id;
 
     private String nombre;
 
@@ -25,22 +30,23 @@ public class EquipoDto {
 
     private List<Long> jugadoresIds;
 
+
     public Equipo dtoToEntity(EquipoDto dto) {
+        List<Futbolista> futbolistas = dto.getJugadoresIds() != null ?
+            dto.getJugadoresIds().stream()
+                .map(id -> futbolistaRepository.findById(id).orElse(null))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList())
+            : null;
+
         return Equipo.builder()
-                .id(dto.getId())
-                .nombre(dto.getNombre())
-                .Categoria(dto.getCategoria())
-                .imgEquipo(dto.getImgEquipo())
-                .listJugadores(dto.getJugadoresIds() != null ?
-                        dto.getJugadoresIds().stream()
-                                .map(id -> {
-                                    Futbolista futbolista = new Futbolista();
-                                    futbolista.setId(id);
-                                    return futbolista;
-                                })
-                                .collect(Collectors.toList()) : null)
-                .build();
-    }
+            .id(dto.getId())
+            .nombre(dto.getNombre())
+            .categoria(dto.getCategoria())
+            .imgEquipo(dto.getImgEquipo())
+            .listFutbolistas(futbolistas)
+            .build();
+}
 
 
 

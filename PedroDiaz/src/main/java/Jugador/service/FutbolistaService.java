@@ -65,11 +65,11 @@ public class FutbolistaService {
         return futbolistaRepository.findByPosicion(id);
     }
 
-    public double calcularSalarioConExtra(Long id){
+    public double calcularBonusSalario(Long id){
         int totalGoles = 0, totalAsistencias = 0;
         double extras=0.0, golesBonus=1000, asistenciasBonus=500;
         Futbolista futbolista = findFutbolistaById(id);
-        if (futbolista instanceof Jugador jugador){
+        if (futbolista instanceof Jugador ){
             Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
             totalGoles = ((EstadisticasJugador)estadisticas).getGoles();
             totalAsistencias = ((EstadisticasJugador)estadisticas).getAsistencias();
@@ -77,7 +77,7 @@ public class FutbolistaService {
             return extras;
 
         }
-        if (futbolista instanceof Portero portero){
+        if (futbolista instanceof Portero ){
             int totalPorteriasACero = 0;
             double porteriasImbatidasBonus = 800;
             Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
@@ -85,7 +85,14 @@ public class FutbolistaService {
             extras = totalPorteriasACero * porteriasImbatidasBonus;
             return extras;
         }
-        return extras+futbolista.getSalarioMensualBase();
+        return extras;
+    }
+    public double calcularSalarioFutbolista(Long id){
+        Futbolista  futbolista = findFutbolistaById(id);
+        double extra=0.0;
+        extra = calcularBonusSalario(id);
+
+        return extra+futbolista.getSalarioMensualBase();
     }
 
 

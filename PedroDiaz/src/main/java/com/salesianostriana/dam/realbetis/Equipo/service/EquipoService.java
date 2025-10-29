@@ -34,6 +34,8 @@ public class EquipoService {
         return equipoRepository.findAll();
     }
 
+    
+
 
     public Equipo findById (Long id){
         return equipoRepository.findById(id)
@@ -77,9 +79,9 @@ public class EquipoService {
 
 
 
-    public List<Jugador> findMaxGoleadores() {
+    public List<Jugador> findMaxGoleadores(Long id) {
         
-        return equipoRepository.findAll().stream()
+        return equipoRepository.findById(id).stream()
             .flatMap(e -> e.getListFutbolistas().stream())
             .filter(f -> f instanceof Jugador)
             .map(f -> (Jugador) f)
@@ -88,14 +90,14 @@ public class EquipoService {
                 int  goles2 = ((EstadisticasJugador) estadisticasService.getEstadisticasByFutbolista(j2.getId())).getGoles();
                 return Integer.compare(goles2, goles1); 
             })
-            .limit(3)
+            
             .collect(Collectors.toList());
     }
 
 
-    public List <Jugador> findMaxAsistentes(){
+    public List <Jugador> findMaxAsistentes(Long id){
 
-        return equipoRepository.findAll().stream()
+        return equipoRepository.findById(id).stream()
             .flatMap(e->e.getListFutbolistas().stream())
             .filter(f-> f instanceof Jugador)
             .map( f -> (Jugador) f)

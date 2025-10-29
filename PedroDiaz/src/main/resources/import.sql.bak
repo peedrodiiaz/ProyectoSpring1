@@ -1,3 +1,5 @@
+-- BACKUP of import.sql created by assistant on 2025-10-29
+-- Original file contents follow
 -- Equipos
 INSERT INTO equipo (id, nombre, categoria, img_equipo) VALUES (1, 'Real Betis Balompié', 'Primera División', '/img/equipos/betis.png');
 INSERT INTO equipo (id, nombre, categoria, img_equipo) VALUES (2, 'Betis Deportivo', 'Cantera', '/img/equipos/betis_deportivo.png');

@@ -1,0 +1,70 @@
+/* Styles for info_equipo.html */
+/* Styles for info_equipo.html */
+.info-header {
+    background: linear-gradient(90deg, rgba(0,122,51,0.06), rgba(0,122,51,0.02));
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.info-header .team-img {
+    max-height: 64px;
+    object-fit: contain;
+    margin-right: 12px;
+}
+
+.player-row {
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 8px;
+    background: #fff;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.player-row:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.player-row .row { align-items: center; }
+
+.player-avatar img {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(0,122,51,0.08);
+}
+
+.avatar-placeholder {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #e9f7ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #007a33;
+    font-weight: 700;
+    border: 2px dashed rgba(0,122,51,0.06);
+}
+
+.player-name { font-size: 1.05rem; }
+.player-meta { font-size: 0.9rem; }
+
+.stat-badge { display:block; font-size:0.95rem; }
+.stat-label { font-size: 0.8rem; color: #6c757d; }
+.stat-value { font-size: 1.1rem; font-weight:700; }
+
+.player-actions .btn { min-width: 92px; }
+
+/* Accent on left of row to indicate type (player/keeper) */
+.player-row[data-role="portero"] { border-left: 4px solid #0d6efd; }
+.player-row[data-role="jugador"] { border-left: 4px solid #198754; }
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+    .player-row .player-actions { justify-content: flex-end; }
+    .player-avatar img, .avatar-placeholder { width: 56px; height: 56px; }
+    .player-row { padding: 0.75rem; }
+}
+
+/* Small utility to tighten spacing */
+.players-list { display: flex; flex-direction: column; gap: 0.75rem; }
+

@@ -31,8 +31,7 @@ public abstract class Futbolista {
     private int numCamiseta;
     private double salarioMensualBase;
 
-    @OneToOne
-    @JoinColumn(name = "estadisticas_id")
+    @OneToOne(mappedBy = "futbolista", fetch = FetchType.LAZY)
     private Estadisticas estadisticas;
     @ManyToOne
     @JoinColumn(name = "equipo_id")

@@ -87,12 +87,12 @@
 
                     <div class="player-stats text-center mx-3">
                         <div class="stat-label text-muted">Goles</div>
-                        <div class="stat-value fw-bold text-success" th:text="${f.estadisticas != null ? f.estadisticas.goles : 0}">0</div>
+                        <div class="stat-value fw-bold text-success" th:text="${f.estadisticas != null and f.estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador) ? f.estadisticas.goles : 0}">0</div>
                     </div>
 
                     <div class="player-stats text-center mx-3">
                         <div class="stat-label text-muted">Asistencias</div>
-                        <div class="stat-value fw-bold text-primary" th:text="${f.estadisticas != null ? f.estadisticas.asistencias : 0}">0</div>
+                        <div class="stat-value fw-bold text-primary" th:text="${f.estadisticas != null and f.estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador) ? f.estadisticas.asistencias : 0}">0</div>
                     </div>
 
                     <div class="player-actions d-flex gap-2">

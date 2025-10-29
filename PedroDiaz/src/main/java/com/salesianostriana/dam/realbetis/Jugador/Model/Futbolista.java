@@ -38,20 +38,6 @@ public abstract class Futbolista {
     private Equipo equipo;
 
 
-//    public static FutbolistaDto entityConverToDto(Futbolista futbolista) {
-//        return FutbolistaDto.builder()
-//                .id(futbolista.getId())
-//                .nombre(futbolista.getNombre())
-//                .apellidos(futbolista.getApellidos())
-//                .imgJugador(futbolista.getImgJugador())
-//                .fechaNacimiento(futbolista.getFechaNacimiento())
-//                .fechaInicioContrato(futbolista.getFechaInicioContrato())
-//                .nacionalidad(futbolista.getNacionalidad())
-//                .numCamiseta(futbolista.getNumCamiseta())
-//                .salarioMensualBase(futbolista.getSalarioMensualBase())
-//                .equipoId(futbolista.getEquipo() != null ? futbolista.getEquipo().getId() : null)
-//                .build();
-//    }
 
 
 

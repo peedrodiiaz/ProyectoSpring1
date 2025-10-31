@@ -60,7 +60,9 @@ public class FutbolistaService {
     }
 
     public void deleteFutbolista(Long id) {
+        
         futbolistaRepository.deleteById(id);
+
     }
 
     public List<Futbolista> findFutbolistaByEquipoId(Long equipoId) {

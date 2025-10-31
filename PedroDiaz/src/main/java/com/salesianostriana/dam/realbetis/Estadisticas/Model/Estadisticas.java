@@ -3,7 +3,6 @@ package com.salesianostriana.dam.realbetis.Estadisticas.Model;
 
 import com.salesianostriana.dam.realbetis.Estadisticas.dto.EstadisticasDto;
 import com.salesianostriana.dam.realbetis.Jugador.Model.Futbolista;
-import com.salesianostriana.dam.realbetis.Jugador.Model.Jugador;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +21,8 @@ public class Estadisticas {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "futbolista_id")
     @ToString.Exclude
     private Futbolista futbolista;

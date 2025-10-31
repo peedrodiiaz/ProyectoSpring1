@@ -73,13 +73,16 @@
                 <div class="player-row d-flex align-items-center justify-content-between mb-3 p-3" th:each="f : ${futbolistas}">
                     <div class="d-flex align-items-center">
                         <div class="player-avatar me-3">
-                            <img th:if="${f.imgFutbolista != null}" th:src="@{${f.imgFutbolista}}" alt="avatar"/>
+                            <img th:if="${f.imgFutbolista != null}" th:src="@{${f.imgFutbolista}}" alt="Imagen futbolista"/>
                             <div th:if="${f.imgFutbolista == null}" class="avatar-placeholder" th:text="${f.nombre.substring(0,1)}">A</div>
                         </div>
                         <div>
                             <div class="player-name fw-bold" th:text="${f.nombre}">Nombre Jugador</div>
-                            <div class="player-meta text-muted">Dorsal: <span th:text="${f.numCamiseta}">10</span> · Posición: <span th:text="${f instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador) ? f.posicion : 'Portero'}">Delantero</span></div>
-                        </div>
+                            <div class="player-meta text-muted">Dorsal: <span th:text="${f.numCamiseta}">10</span>
+                                · Posición: <span
+                                th:text="${f instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador) ? f.posicion : 'Portero'}">Delantero</span>
+                            </div>
+                        </div>  
                     </div>
 
                     <div th:if="${f.estadisticas != null and f.estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}" class="d-flex">

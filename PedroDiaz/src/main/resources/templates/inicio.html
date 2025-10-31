@@ -57,7 +57,7 @@
                         <p class="card-text">
                             <span class="badge bg-success" th:text="${equipo.categoria}">Categoría</span>
                         </p>
-                        <a href="#" class="btn btn-success w-100">Ver Detalles</a>
+                        <a th:href="@{'/equipos/' + ${equipo.id}}" class="btn btn-success w-100">Ver Detalles</a>
                     </div>
                 </div>
             </div>

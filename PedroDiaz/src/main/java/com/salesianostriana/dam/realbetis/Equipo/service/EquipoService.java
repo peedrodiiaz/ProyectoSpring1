@@ -104,9 +104,9 @@ public class EquipoService {
             .sorted ((j1,j2)->{
                 int asis1 = ((EstadisticasJugador)estadisticasService.getEstadisticasByFutbolista(j1.getId())).getAsistencias();
                 int asis2 = ((EstadisticasJugador)estadisticasService.getEstadisticasByFutbolista(j2.getId())).getAsistencias();
-                return Integer.compare(asis1, asis2);
+                return Integer.compare(asis2, asis1);
             })
-            .limit(3)
+            
             .collect(Collectors.toList());
 
 

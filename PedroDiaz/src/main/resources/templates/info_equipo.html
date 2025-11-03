@@ -50,11 +50,18 @@
             <div class="d-flex gap-2 align-items-center mt-3 mt-md-0">
                 <a th:if="${equipo != null}" th:href="@{/equipos/{id}/edit(id=${equipo.id})}" class="btn nav-betis-link">Editar equipo</a>
 
-                <div th:if="${equipo != null}" style="min-width: 160px;">
-                    <select class="form-select form-select-sm" onchange="if(this.value) window.location=this.value">
-                        <option th:value="@{/equipos/{id}(id=${equipo.id})}">Sin ordenar</option>
-                        <option th:value="@{/equipos/{id}/ordenarMaxGoles(id=${equipo.id})}">Ordenar por goles</option>
-                        <option th:value="@{/equipos/{id}/ordenarMaxAsistencias(id=${equipo.id})}">Ordenar por asistencias</option>
+                <div th:if="${equipo != null}">
+                    <select class="form-select form-select-sm" onchange="window.location=this.value">
+                        <option selected  value="">Elige una opción</option>
+                        <option th:value="@{/equipos/{id}(id=${equipo.id})}">
+                            Sin ordenar
+                        </option>
+                        <option th:value="@{/equipos/{id}/ordenarMaxGoles(id=${equipo.id})}">
+                            Ordenar por goles
+                        </option>
+                        <option th:value="@{/equipos/{id}/ordenarMaxAsistencias(id=${equipo.id})}">
+                            Ordenar por asistencias
+                        </option>
                     </select>
                 </div>
             </div>

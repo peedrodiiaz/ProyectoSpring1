@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title th:text="${equipo != null ? 'Editar - ' + equipo.nombre : 'Editar equipo'}">Editar equipo</title>
+	<link rel="stylesheet" th:href="@{/css/info-equipo.css}" />
+</head>
+<body>
+
+<div class="container mt-4">
+	<div class="row">
+		<div class="col-12">
+			<h2 th:text="${equipo != null ? 'Editar equipo: ' + equipo.nombre : 'Editar equipo'}">Editar equipo</h2>
+			<hr />
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8">
+			<form th:action="@{/equipos/{id}/edit(id=${equipo.id})}" th:object="${equipo}" method="post">
+				<input type="hidden" name="_method" value="put" />
+
+				<div class="mb-3">
+					<label for="nombre" class="form-label">Nombre</label>
+					<input id="nombre" type="text" th:field="*{nombre}" class="form-control" placeholder="Nombre del equipo" />
+				</div>
+
+				<div class="mb-3">
+					<label for="categoria" class="form-label">Categoría</label>
+					<input id="categoria" type="text" th:field="*{categoria}" class="form-control" placeholder="Ej. Primera División" />
+				</div>
+
+				<div class="mb-3">
+					<label for="imgEquipo" class="form-label">Imagen (ruta)</label>
+					<input id="imgEquipo" type="text" th:field="*{imgEquipo}" class="form-control" placeholder="/img/equipos/mi_escudo.png" />
+					<div class="form-text">Puedes indicar la ruta relativa dentro de <code>/static/img/equipos</code> o subir manualmente el fichero desde el servidor.</div>
+				</div>
+
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Guardar</button>
+					<a th:href="@{/equipos/{id}(id=${equipo.id})}" class="btn btn-secondary ms-2">Cancelar</a>
+				</div>
+			</form>
+		</div>
+
+		<div class="col-md-4">
+			<h5>Vista previa del escudo</h5>
+			<div th:if="${equipo != null and equipo.imgEquipo != null}">
+				<img th:src="@{${equipo.imgEquipo}}" alt="Escudo" class="img-fluid img-thumbnail" style="max-width: 220px;" />
+			</div>
+			<div th:if="${equipo == null or equipo.imgEquipo == null}">
+				<p class="text-muted">No hay imagen configurada para este equipo.</p>
+			</div>
+
+			<hr />
+			<form th:action="@{/equipos/{id}(id=${equipo.id})}" method="post" style="display:inline" onsubmit="return confirm('¿Eliminar este equipo? Esta acción no se puede deshacer.');">
+				<input type="hidden" name="_method" value="delete" />
+				<button type="submit" class="btn btn-danger">Eliminar equipo</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
+

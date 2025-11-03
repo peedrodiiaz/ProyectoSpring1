@@ -130,7 +130,10 @@
 
                     <div class="player-actions d-flex gap-2">
                         <a th:href="@{/futbolistas/{id}(id=${f.id})}" class="btn btn-outline-primary btn-sm">Ver detalles</a>
-                        <a th:href="@{/equipos/{eqId}/eliminarFutbolista/{fid}(eqId=${equipo.id},fid=${f.id})}" class="btn btn-outline-danger btn-sm">Eliminar</a>
+                        <form th:action="@{/futbolistas/{eqid}/eliminarFutbolista/{id}(eqid=${equipo.id},id=${f.id})}" method="post" style="display:inline" onsubmit="return confirm('¿Eliminar este futbolista?');">
+                            <input type="hidden" name="_method" value="delete" >
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
+                        </form>
                     </div>
                 </div>
             </div>

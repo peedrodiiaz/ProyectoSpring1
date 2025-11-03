@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.realbetis.Equipo.Model;
 
-import com.salesianostriana.dam.realbetis.Equipo.dto.EquipoDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -31,14 +30,7 @@ public class Equipo {
     private List<Futbolista> listFutbolistas;
     private String imgEquipo;
 
-public EquipoDto EntityconverToDto(Equipo equipo) {
-    return EquipoDto.builder()
-            .id(equipo.getId())
-            .nombre(equipo.getNombre())
-            .categoria(equipo.getCategoria())
-            .imgEquipo(equipo.getImgEquipo())
-            .build();
-}
+
 
 
 }

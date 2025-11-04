@@ -30,6 +30,7 @@ public abstract class Futbolista {
     private String nacionalidad;
     private int numCamiseta;
     private double salarioMensualBase;
+    private String piernaBuena;
                                                                  //Esto para la herencia, elimar.
     @OneToOne(mappedBy = "futbolista", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Estadisticas estadisticas;

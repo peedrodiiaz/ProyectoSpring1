@@ -14,6 +14,6 @@ import lombok.experimental.SuperBuilder;
 @DiscriminatorValue("PORTERO")
 public class Portero extends Futbolista{
 
-    private String piernaBuena;
+    private String manoDominante;
 
 }

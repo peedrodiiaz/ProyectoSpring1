@@ -3,9 +3,12 @@ package com.salesianostriana.dam.realbetis.Equipo.Controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.salesianostriana.dam.realbetis.Equipo.Model.Equipo;
 import com.salesianostriana.dam.realbetis.Equipo.service.EquipoService;
 import com.salesianostriana.dam.realbetis.Jugador.service.FutbolistaService;
 
@@ -44,6 +47,20 @@ public class EquipoController {
         return "info_equipo";
 
 
+    }
+
+    @GetMapping ("/{id}/edit")
+    public String formEdit(@PathVariable Long id, Model model){
+        model.addAttribute("equipo", equipoService.findById(id));
+        return "edit_equipo";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editEquipo(@PathVariable Long id, @ModelAttribute ("equipo") Equipo e){
+
+        equipoService.updateEquipo(id, e);
+
+        return "info_equipos";
     }
 
 

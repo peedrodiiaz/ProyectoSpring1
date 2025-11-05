@@ -4,7 +4,6 @@ package com.salesianostriana.dam.realbetis.Estadisticas.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.Estadisticas;
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador;
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero;
@@ -37,9 +36,7 @@ public class EstadisticasService {
                 .orElseThrow(()-> new EntityNotFoundException("Estadística no encontrada"));
     }
 
-    public Estadisticas createEstadistica(Estadisticas estadistica) {
-        return estadisticasRepository.save(estadistica);
-    }
+
 
     public Estadisticas updateEstadistica(Long id, Estadisticas estadisticaDetails) {
         Estadisticas estadistica = findById(id);

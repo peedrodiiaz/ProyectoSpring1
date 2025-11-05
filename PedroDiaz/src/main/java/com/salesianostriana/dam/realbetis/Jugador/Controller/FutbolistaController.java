@@ -31,8 +31,14 @@ public class FutbolistaController {
     @GetMapping("/{id}")
     public String getFutbolista(@PathVariable Long id, Model model){
         Futbolista futbolista = futbolistaService.findFutbolistaById(id);
+        double bonus = futbolistaService.calcularBonusSalario(id);
+        double sueldoFinal = futbolistaService.calcularSalarioFutbolista(id);
         model.addAttribute("futbolista", futbolista);
+        model.addAttribute("bonus", bonus);
+        model.addAttribute("sueldoFinal", sueldoFinal);
         return "info_futbolista";
     }
+    
+
 
 }

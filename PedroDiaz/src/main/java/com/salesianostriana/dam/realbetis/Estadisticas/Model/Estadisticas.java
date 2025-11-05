@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.realbetis.Estadisticas.Model;
 
 
-import com.salesianostriana.dam.realbetis.Estadisticas.dto.EstadisticasDto;
+
 import com.salesianostriana.dam.realbetis.Jugador.Model.Futbolista;
 
 import jakarta.persistence.*;
@@ -34,16 +34,7 @@ public class Estadisticas {
     private double calificacion;
 
 
-    public static EstadisticasDto EntityconverToDto(Estadisticas estadisticas) {
-        return EstadisticasDto.builder()
-                .id(estadisticas.getId())
-                .jugadorId(estadisticas.getFutbolista().getId())
-                .minJugados(estadisticas.getMinJugados())
-                .tarAmarilla(estadisticas.getTarAmarilla())
-                .tarRoja(estadisticas.getTarRoja())
-                .calificacion(estadisticas.getCalificacion())
-                .build();
-    }
+    
 
 
 

@@ -73,13 +73,16 @@ public class FutbolistaService {
 
     public double calcularBonusSalario(Long id){
         int totalGoles = 0, totalAsistencias = 0;
-        double extras=0.0, golesBonus=1000, asistenciasBonus=500;
+        double extras=0.0, golesBonus=1000, asistenciasBonus=500, restarPorAmarilla=250, restarPorRoja=450;
         Futbolista futbolista = findFutbolistaById(id);
+        int tarjetasAmarillas, tarjetasRojas;
         if (futbolista instanceof Jugador ){
             Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
             totalGoles = ((EstadisticasJugador)estadisticas).getGoles();
             totalAsistencias = ((EstadisticasJugador)estadisticas).getAsistencias();
-             extras = (totalGoles * golesBonus) + (totalAsistencias * asistenciasBonus);
+            tarjetasAmarillas= ((EstadisticasJugador)estadisticas).getTarAmarilla();
+            tarjetasRojas= ((EstadisticasJugador)estadisticas).getTarRoja();
+             extras = (totalGoles * golesBonus) + (totalAsistencias * asistenciasBonus)-(tarjetasAmarillas*restarPorAmarilla)-(tarjetasRojas*restarPorRoja);
             return extras;
 
         }

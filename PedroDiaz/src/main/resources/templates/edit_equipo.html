@@ -15,14 +15,14 @@
 	<div class="row">
 		<div class="col-12">
 			<h2 th:text="${equipo != null ? 'Editar equipo: ' + equipo.nombre : 'Editar equipo'}">Editar equipo</h2>
-			<hr />
+			<hr/>
 		</div>
 	</div>
 
 	<div class="row">
- 		<div class="col-md-8">
- 			<form th:action="@{/equipos/{id}/edit(id=${equipo.id})}" th:object="${equipo}" method="post" class="edit-equipo-form">
-				<input type="hidden" name="_method" value="put" />
+		<div class="col-md-8">
+			<form th:action="@{/equipos/{id}/edit(id=${equipo.id})}" th:object="${equipo}" method="post" class="edit-equipo-form">
+				<input type="hidden" name="_method" value="put"/>
 
 				<div class="mb-3">
 					<label for="nombre" class="form-label">Nombre</label>
@@ -41,7 +41,7 @@
 				</div>
 
 				<div class="mb-3 form-actions">
-					<button type="submit" class="btn btn-primary">Guardar</button>
+					<button  type="submit" class="btn btn-primary">Guardar</button>
 					<a th:href="@{/equipos/{id}(id=${equipo.id})}" class="btn btn-secondary ms-2">Cancelar</a>
 				</div>
 			</form>

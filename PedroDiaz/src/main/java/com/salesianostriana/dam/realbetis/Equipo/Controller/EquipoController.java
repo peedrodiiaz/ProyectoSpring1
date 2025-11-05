@@ -55,12 +55,12 @@ public class EquipoController {
         return "edit_equipo";
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/{id}/edit")
     public String editEquipo(@PathVariable Long id, @ModelAttribute ("equipo") Equipo e){
 
         equipoService.updateEquipo(id, e);
 
-        return "info_equipos";
+        return "redirect:/equipos/" +id ;
     }
 
 

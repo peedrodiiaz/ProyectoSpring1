@@ -47,10 +47,13 @@ public class EquipoService {
 
     public Equipo updateEquipo (Long id, Equipo equipoUpdate){
         Equipo eq = findById(id);
+        eq.setNombre(equipoUpdate.getNombre());
         eq.setCategoria(equipoUpdate.getCategoria());
         eq.setImgEquipo(equipoUpdate.getImgEquipo());
-        eq.setId(equipoUpdate.getId());
-        eq.setListFutbolistas(equipoUpdate.getListFutbolistas());
+        if (eq.getListFutbolistas()!=null) {
+            eq.getListFutbolistas().forEach(f -> f.setEquipo(eq));
+        }
+        System.out.println(eq);
         return equipoRepository.save(eq);
 
     }

@@ -19,7 +19,6 @@ import java.util.List;
 
 @Service
 public class FutbolistaService {
-    private final JugadorRepository jugadorRepository;
     private final FutbolistaRepository futbolistaRepository;
     private final EstadisticasService estadisticasService;
 
@@ -38,6 +37,7 @@ public class FutbolistaService {
     public Futbolista findFutbolistaById(Long id) {
         return futbolistaRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("Futbolista no encontrado"));
+                
     }
 
 
@@ -45,18 +45,55 @@ public class FutbolistaService {
         return futbolistaRepository.save(futbolista);
     }
 
-    public Futbolista updateFutbolista(Long id, Futbolista futbolistaDetails) {
-        Futbolista futbolista = findFutbolistaById(id);
-        futbolista.setNombre(futbolistaDetails.getNombre());
-        futbolista.setApellidos(futbolistaDetails.getApellidos());
-        futbolista.setImgFutbolista(futbolistaDetails.getImgFutbolista());
-        futbolista.setFechaNacimiento(futbolistaDetails.getFechaNacimiento());
-        futbolista.setFechaInicioContrato(futbolistaDetails.getFechaInicioContrato());
-        futbolista.setNacionalidad(futbolistaDetails.getNacionalidad());
-        futbolista.setNumCamiseta(futbolistaDetails.getNumCamiseta());
-        futbolista.setSalarioMensualBase(futbolistaDetails.getSalarioMensualBase());
-        futbolista.setEquipo(futbolistaDetails.getEquipo());
-        return jugadorRepository.save(futbolista);
+    
+
+    public Futbolista upadateFutbolista (Long id, Futbolista futbolista){
+        Futbolista f = findFutbolistaById(id);
+
+        f.setApellidos(futbolista.getApellidos());
+        f.setEquipo(futbolista.getEquipo());
+        Estadisticas incomingEst = futbolista.getEstadisticas();
+                if (f instanceof Jugador) {
+                    EstadisticasJugador ej = new EstadisticasJugador();
+                    ej.setMinJugados(incomingEst.getMinJugados());
+                    ej.setTarAmarilla(incomingEst.getTarAmarilla());
+                    ej.setTarRoja(incomingEst.getTarRoja());
+                    ej.setCalificacion(incomingEst.getCalificacion());
+                    if (incomingEst instanceof EstadisticasJugador) {
+                        ej.setGoles(((EstadisticasJugador) incomingEst).getGoles());
+                        ej.setAsistencias(((EstadisticasJugador) incomingEst).getAsistencias());
+                    }
+                    f.setEstadisticas(ej);
+                } else if (f instanceof Portero) {
+                    EstadisticasPortero ep = new EstadisticasPortero();
+                    ep.setMinJugados(incomingEst.getMinJugados());
+                    ep.setTarAmarilla(incomingEst.getTarAmarilla());
+                    ep.setTarRoja(incomingEst.getTarRoja());
+                    ep.setCalificacion(incomingEst.getCalificacion());
+                    if (incomingEst instanceof EstadisticasPortero) {
+                        ep.setParadas(((EstadisticasPortero) incomingEst).getParadas());
+                        ep.setPorteriasACero(((EstadisticasPortero) incomingEst).getPorteriasACero());
+                    }
+                    f.setEstadisticas(ep);
+                } 
+
+        f.setFechaInicioContrato(futbolista.getFechaInicioContrato());
+        f.setImgFutbolista(futbolista.getImgFutbolista());
+        f.setNacionalidad(futbolista.getNacionalidad());
+        f.setNombre(futbolista.getNombre());
+        f.setNumCamiseta(futbolista.getNumCamiseta());
+        f.setPiernaBuena(futbolista.getPiernaBuena());
+        f.setSalarioMensualBase(futbolista.getSalarioMensualBase());
+        if(f instanceof Jugador jugador && futbolista instanceof Jugador jugador2 ){
+            ((jugador)).setPosicion(jugador2.getPosicion());
+            
+        }
+        if (f instanceof Portero portero && futbolista instanceof Portero portero2){
+            ((portero)).setManoDominante(portero2.getManoDominante());
+        }
+        
+        return futbolistaRepository.save(f);
+        
     }
 
     public void deleteFutbolista(Long id) {
@@ -78,21 +115,28 @@ public class FutbolistaService {
         int tarjetasAmarillas, tarjetasRojas;
         if (futbolista instanceof Jugador ){
             Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
-            totalGoles = ((EstadisticasJugador)estadisticas).getGoles();
-            totalAsistencias = ((EstadisticasJugador)estadisticas).getAsistencias();
-            tarjetasAmarillas= ((EstadisticasJugador)estadisticas).getTarAmarilla();
-            tarjetasRojas= ((EstadisticasJugador)estadisticas).getTarRoja();
-             extras = (totalGoles * golesBonus) + (totalAsistencias * asistenciasBonus)-(tarjetasAmarillas*restarPorAmarilla)-(tarjetasRojas*restarPorRoja);
+            
+            if ((estadisticas instanceof EstadisticasJugador)){
+            EstadisticasJugador ej = (EstadisticasJugador) estadisticas;
+            totalGoles = ej.getGoles();
+            totalAsistencias = ej.getAsistencias();
+            tarjetasAmarillas = ej.getTarAmarilla();
+            tarjetasRojas = ej.getTarRoja();
+            extras = (totalGoles * golesBonus) + (totalAsistencias * asistenciasBonus) - (tarjetasAmarillas * restarPorAmarilla) - (tarjetasRojas * restarPorRoja);
             return extras;
-
+            }
         }
         if (futbolista instanceof Portero ){
             int totalPorteriasACero = 0;
             double porteriasImbatidasBonus = 800;
             Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
-            totalPorteriasACero = ((EstadisticasPortero)estadisticas).getPorteriasACero();
+            
+            if ((estadisticas instanceof EstadisticasPortero)) {
+            EstadisticasPortero ep = (EstadisticasPortero) estadisticas;
+            totalPorteriasACero = ep.getPorteriasACero();
             extras = totalPorteriasACero * porteriasImbatidasBonus;
             return extras;
+            }
         }
         return extras;
     }

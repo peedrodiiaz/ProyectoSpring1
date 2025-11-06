@@ -1,0 +1,14 @@
+/* Styles for the editar futbolista form */
+.edit-form { max-width: 1100px; margin: 0 auto; }
+.edit-form .form-label { font-weight: 600; }
+.edit-form h5 { color: #007a3d; }
+.edit-form .btn-success { background-color: #00954C; border-color: #008a44; }
+.edit-form .btn-success:hover { background-color: #007a3d; }
+.edit-form .form-control, .edit-form .form-select { border-radius: 6px; }
+
+@media (max-width: 767px){
+    .edit-form{ padding: 0 12px; }
+}
+
+/* reuse some stat card styles */
+.stat-card{ box-shadow: 0 2px 6px rgba(0,0,0,0.06); border-radius: 8px; padding: 10px; }

@@ -32,11 +32,11 @@
 		<div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
 			<div class="d-flex align-items-center">
 				<img th:if="${futbolista != null and futbolista.equipo != null and futbolista.equipo.imgEquipo != null}"
-					 th:src="@{${futbolista.equipo.imgEquipo}}"
-					 alt="Logo equipo" class="logo-betis me-3" />
+					th:src="@{${futbolista.equipo.imgEquipo}}"
+					alt="Logo equipo" class="logo-betis me-3" />
 				<img th:if="${futbolista == null or futbolista.equipo == null or futbolista.equipo.imgEquipo == null}"
-					 th:src="@{/img/Escudo_Betis.svg}"
-					 alt="Logo Real Betis" class="logo-betis me-3 animate__animated animate__bounceIn" />
+					th:src="@{/img/Escudo_Betis.svg}"
+					alt="Logo Real Betis" class="logo-betis me-3 animate__animated animate__bounceIn" />
 				<div>
 					<h1 class="title-betis" th:text="${futbolista != null && futbolista.equipo != null ? futbolista.equipo.nombre : 'Real Betis'}">Equipo</h1>
 					<p class="subtitle-betis mb-0" th:text="${futbolista != null && futbolista.equipo != null ? futbolista.equipo.categoria : ''}">Categoría</p>
@@ -124,11 +124,18 @@
 							</div>
 
 							<div class="text-end">
-								<a th:href="@{'/futbolistas/' + ${futbolista.id} + '/edit'}" class="btn btn-outline-primary btn-sm">Editar</a>
+								<a th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Portero)}"
+									th:href="@{'/futbolistas/portero/' + ${futbolista.id} + '/edit'}"
+									class="btn btn-outline-primary btn-sm">Editar</a>
+
+								<a th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador)}"
+									th:href="@{'/futbolsitas/jugador/' + ${futbolista.id} + '/edit'}"
+									class="btn btn-outline-primary btn-sm">Editar</a>
+
 							</div>
 						</div>
 
-						<hr />
+						<hr/>
 
 						<h5 class="mb-3">Estadísticas</h5>
 
@@ -188,7 +195,7 @@
 
 						<div class="mt-4 d-flex gap-2 flex-wrap">
 							<a th:href="@{'/equipos/' + ${futbolista.equipo.id}}" class="btn btn-outline-secondary">Volver al equipo</a>
-							<a th:href="@{'/futbolistas/' + ${futbolista.id} + '/edit'}" class="btn btn-primary">Editar futbolista</a>
+							
 						</div>
 					</div>
 				</div>

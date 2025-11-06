@@ -129,7 +129,7 @@
 									class="btn btn-outline-primary btn-sm">Editar</a>
 
 								<a th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador)}"
-									th:href="@{'/futbolsitas/jugador/' + ${futbolista.id} + '/edit'}"
+									th:href="@{'/futbolistas/jugador/' + ${futbolista.id} + '/edit'}"
 									class="btn btn-outline-primary btn-sm">Editar</a>
 
 							</div>
@@ -140,54 +140,54 @@
 						<h5 class="mb-3">Estadísticas</h5>
 
 						<div class="row gy-3">
-							<div class="col-6 col-sm-4 col-md-3" th:if="${futbolista.estadisticas != null}">
+							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas != null}">
 								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${#numbers.formatInteger(futbolista.estadisticas.minJugados, 0)}"></div>
+									<div class="stat-value" th:text="${#numbers.formatInteger(estadisticas.minJugados, 0)}"></div>
 									<div class="stat-label">Minutos</div>
 								</div>
 							</div>
 
-							<div class="col-6 col-sm-4 col-md-3" th:if="${futbolista.estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)}">
+							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)}">
 								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${futbolista.estadisticas.paradas}"></div>
+									<div class="stat-value" th:text="${estadisticas.paradas}"></div>
 									<div class="stat-label">Paradas</div>
 								</div>
 							</div>
 
-							<div class="col-6 col-sm-4 col-md-3" th:if="${futbolista.estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)}">
+							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)}">
 								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${futbolista.estadisticas.porteriasACero}"></div>
+									<div class="stat-value" th:text="${estadisticas.porteriasACero}"></div>
 									<div class="stat-label">Porterías 0</div>
 								</div>
 							</div>
 
-							<div class="col-6 col-sm-4 col-md-3" th:if="${futbolista.estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}">
+							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}">
 								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${futbolista.estadisticas.goles}"></div>
+									<div class="stat-value" th:text="${estadisticas.goles}"></div>
 									<div class="stat-label">Goles</div>
 								</div>
 							</div>
 
-							<div class="col-6 col-sm-4 col-md-3" th:if="${futbolista.estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}">
+							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}">
 								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${futbolista.estadisticas.asistencias}"></div>
+									<div class="stat-value" th:text="${estadisticas.asistencias}"></div>
 									<div class="stat-label">Asistencias</div>
 								</div>
 							</div>
 
-							<div class="col-6 col-sm-4 col-md-3" th:if="${futbolista.estadisticas != null}">
+							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas != null}">
 								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${#numbers.formatDecimal(futbolista.estadisticas.calificacion, 1, 1)}"></div>
+									<div class="stat-value" th:text="${#numbers.formatDecimal(estadisticas.calificacion, 1, 1)}"></div>
 									<div class="stat-label">Calificación</div>
 								</div>
 							</div>
 
-							<div class="col-6 col-sm-4 col-md-3" th:if="${futbolista.estadisticas != null}">
+							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas != null}">
 								<div class="stat-card p-2 text-center text-muted small">
 									<div class="stat-label">Tarjetas</div>
 									<div>
 										<i class="bi bi-square-half"></i>
-										<span th:text="${futbolista.estadisticas.tarAmarilla}"></span> / <span th:text="${futbolista.estadisticas.tarRoja}"></span>
+										<span th:text="${estadisticas.tarAmarilla}"></span> / <span th:text="${estadisticas.tarRoja}"></span>
 									</div>
 								</div>
 							</div>

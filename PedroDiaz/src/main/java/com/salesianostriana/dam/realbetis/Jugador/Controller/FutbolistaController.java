@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.salesianostriana.dam.realbetis.Equipo.service.EquipoService;
+import com.salesianostriana.dam.realbetis.Estadisticas.Model.Estadisticas;
+import com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador;
+import com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero;
 import com.salesianostriana.dam.realbetis.Jugador.Model.Futbolista;
 import com.salesianostriana.dam.realbetis.Jugador.Model.Jugador;
 import com.salesianostriana.dam.realbetis.Jugador.Model.Portero;
@@ -38,7 +41,9 @@ public class FutbolistaController {
         Futbolista futbolista = futbolistaService.findFutbolistaById(id);
         double bonus = futbolistaService.calcularBonusSalario(id);
         double sueldoFinal = futbolistaService.calcularSalarioFutbolista(id);
+        Estadisticas estadisticas = futbolistaService.findFutbolistaById(id).getEstadisticas();
         model.addAttribute("futbolista", futbolista);
+        model.addAttribute("estadisticas", estadisticas);
         model.addAttribute("bonus", bonus);
         model.addAttribute("sueldoFinal", sueldoFinal);
         return "info_futbolista";
@@ -65,14 +70,14 @@ public class FutbolistaController {
     public String editFormJugador(@PathVariable Long id, Model model){
         Futbolista f = futbolistaService.findFutbolistaById(id);
         model.addAttribute("jugador", (Jugador) f);
-        model.addAttribute("estadisticas", f.getEstadisticas());
+        model.addAttribute("estadisticas",(EstadisticasJugador) f.getEstadisticas());
         model.addAttribute("equipo", equipoService.findAll());
         return "edit_jugador";
     }
 
     @PostMapping("/jugador/{id}/edit")
     public String saveJugador(@PathVariable Long id, @ModelAttribute("jugador") Jugador jugador){
-        futbolistaService.upadateFutbolista(id, jugador);
+        futbolistaService.updateFutbolista(id, jugador);
         return "redirect:/futbolistas/" + id;
     }
     /*EDitar cuando es portero */
@@ -81,14 +86,14 @@ public class FutbolistaController {
         Futbolista f = futbolistaService.findFutbolistaById(id);
         
         model.addAttribute("portero", (Portero) f);
-        model.addAttribute("estadisticas", f.getEstadisticas());
+        model.addAttribute("estadisticas",(EstadisticasPortero) f.getEstadisticas());
         model.addAttribute("equipo", equipoService.findAll());
         return "edit_portero";
     }
 
     @PostMapping("/portero/{id}/edit")
     public String savePortero(@PathVariable Long id, @ModelAttribute("portero") Portero portero){
-        futbolistaService.upadateFutbolista(id, portero);
+        futbolistaService.updateFutbolista(id, portero);
         return "redirect:/futbolistas/" + id;
     }
     

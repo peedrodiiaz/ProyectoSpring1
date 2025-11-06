@@ -12,7 +12,6 @@
     <h3 class="mb-3">Editar jugador</h3>
 
     <form th:action="@{/futbolistas/jugador/{id}/edit(id=${jugador.id})}" th:object="${jugador}" method="post">
-        <!-- Hidden ids to keep references -->
         <input type="hidden" th:field="*{id}" />
         <input type="hidden" th:if="${jugador.estadisticas != null}" th:field="*{estadisticas.id}" />
 

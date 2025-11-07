@@ -2,7 +2,6 @@ package com.salesianostriana.dam.realbetis.Jugador.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import com.salesianostriana.dam.realbetis.Jugador.Model.Portero;
 import com.salesianostriana.dam.realbetis.Jugador.service.FutbolistaService;
 
 import lombok.RequiredArgsConstructor;
+
 
 @Controller
 @RequestMapping("/futbolistas")
@@ -41,29 +41,52 @@ public class FutbolistaController {
         Futbolista futbolista = futbolistaService.findFutbolistaById(id);
         double bonus = futbolistaService.calcularBonusSalario(id);
         double sueldoFinal = futbolistaService.calcularSalarioFutbolista(id);
-        Estadisticas estadisticas = futbolistaService.findFutbolistaById(id).getEstadisticas();
+        Estadisticas estadisticas = futbolista.getEstadisticas();
+        
         model.addAttribute("futbolista", futbolista);
         model.addAttribute("estadisticas", estadisticas);
+        
+        // Flags para saber qué tipo es
+        boolean esJugador = estadisticas instanceof EstadisticasJugador;
+        boolean esPortero = estadisticas instanceof EstadisticasPortero;
+        
+        model.addAttribute("esJugador", esJugador);
+        model.addAttribute("esPortero", esPortero);
+        
+        // Pasar campos específicos
+        if (esJugador) {
+            EstadisticasJugador ej = (EstadisticasJugador) estadisticas;
+            model.addAttribute("goles", ej.getGoles());
+            model.addAttribute("asistencias", ej.getAsistencias());
+        }
+        
+        if (esPortero) {
+            EstadisticasPortero ep = (EstadisticasPortero) estadisticas;
+            model.addAttribute("paradas", ep.getParadas());
+            model.addAttribute("porteriasACero", ep.getPorteriasACero());
+        }
+        
         model.addAttribute("bonus", bonus);
         model.addAttribute("sueldoFinal", sueldoFinal);
         return "info_futbolista";
-    }
-
-    // @GetMapping ("{id}/edit")
-    // public String formEdit (@PathVariable Long id, Model model){
-    //     Futbolista f = futbolistaService.findFutbolistaById(id);
-    //     model.addAttribute("futbolista",f);
-    //     model.addAttribute("estadisticas", f.getEstadisticas());
-    //     model.addAttribute("equipo",equipoService.findAll());
-    //     return "edit_futbolista";
-    // }
+}
 
 
-    // @PostMapping("{id}/edit")
-    // public String editFutbolista (@PathVariable Long id, @ModelAttribute("futbolista") Futbolista f){
-    //     futbolistaService.upadateFutbolista(id, f);
-    //     return "redirect:/futbolistas/" + id;
-    // }
+        // @GetMapping ("{id}/edit")
+        // public String formEdit (@PathVariable Long id, Model model){
+        //     Futbolista f = futbolistaService.findFutbolistaById(id);
+        //     model.addAttribute("futbolista",f);
+        //     model.addAttribute("estadisticas", f.getEstadisticas());
+        //     model.addAttribute("equipo",equipoService.findAll());
+        //     return "edit_futbolista";
+        // }
+
+
+        // @PostMapping("{id}/edit")
+        // public String editFutbolista (@PathVariable Long id, @ModelAttribute("futbolista") Futbolista f){
+        //     futbolistaService.upadateFutbolista(id, f);
+        //     return "redirect:/futbolistas/" + id;
+        // }
 
     /*  editar para cuando es ugador */
     @GetMapping("/jugador/{id}/edit")
@@ -96,6 +119,7 @@ public class FutbolistaController {
         futbolistaService.updateFutbolista(id, portero);
         return "redirect:/futbolistas/" + id;
     }
+    
     
 
 

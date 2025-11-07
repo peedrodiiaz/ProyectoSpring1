@@ -13,7 +13,7 @@
 
     <form th:action="@{/futbolistas/jugador/{id}/edit(id=${jugador.id})}" th:object="${jugador}" method="post">
         <input type="hidden" th:field="*{id}" />
-        <input type="hidden" th:if="${jugador.estadisticas != null}" th:field="*{estadisticas.id}" />
+    <input type="hidden" th:field="*{estadisticas.id}" />
 
         <div class="row">
             <div class="col-md-6">
@@ -27,10 +27,12 @@
                 <input class="form-control" type="number" th:field="*{numCamiseta}" />
 
                 <label class="form-label mt-2">Fecha de nacimiento</label>
-                <input class="form-control" type="date" th:field="*{fechaNacimiento}" />
+                <input class="form-control" type="date" name="fechaNacimiento" id="fechaNacimiento"
+                    th:value="${jugador.fechaNacimiento != null ? jugador.fechaNacimiento.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) : ''}" />
 
                 <label class="form-label mt-2">Fecha inicio contrato</label>
-                <input class="form-control" type="date" th:field="*{fechaInicioContrato}" />
+                <input class="form-control" type="date" name="fechaInicioContrato" id="fechaInicioContrato"
+                    th:value="${jugador.fechaInicioContrato != null ? jugador.fechaInicioContrato.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) : ''}" />
 
                 <label class="form-label mt-2">Posición</label>
                 <input class="form-control" th:field="*{posicion}" />
@@ -58,6 +60,8 @@
 
             <div class="col-md-6">
                 <h5>Estadísticas</h5>
+                <!-- Ensure binder knows which concrete subclass to create when binding nested estadisticas -->
+                <input type="hidden" name="estadisticas.class" value="com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador" />
                 <label class="form-label mt-1">Minutos jugados</label>
                 <input class="form-control" type="number" step="0.1" th:field="*{estadisticas.minJugados}" />
 

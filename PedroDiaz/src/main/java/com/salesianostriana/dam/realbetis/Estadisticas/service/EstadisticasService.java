@@ -73,6 +73,10 @@ public class EstadisticasService {
         return estadisticasRepository.findByFutbolista(futbolista);
     }
 
+    public Estadisticas saveEstadistica(Estadisticas estadisticas) {
+        return estadisticasRepository.save(estadisticas);
+    }
+
 
     public EstadisticaResumenDto getResumenEstadisticasEquipo(Long equipoId) {
         List<Futbolista> futbolistas = futbolistaService.findFutbolistaByEquipoId(equipoId);

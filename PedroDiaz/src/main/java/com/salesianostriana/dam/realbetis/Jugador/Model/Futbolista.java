@@ -32,7 +32,7 @@ public abstract class Futbolista {
     private double salarioMensualBase;
     private String piernaBuena;
                                                                  //Esto para la herencia, eliminar.
-    @OneToOne(mappedBy = "futbolista", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "futbolista", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Estadisticas estadisticas;
     @ManyToOne
     @JoinColumn(name = "equipo_id")

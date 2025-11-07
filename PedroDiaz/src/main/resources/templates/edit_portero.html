@@ -13,7 +13,7 @@
     <form th:action="@{/futbolistas/portero/{id}/edit(id=${portero.id})}" th:object="${portero}" method="post">
     
         <input type="hidden" th:field="*{id}" />
-        <input type="hidden" th:if="${portero.estadisticas != null}" th:field="*{estadisticas.id}" />
+    <input type="hidden" th:field="*{estadisticas.id}" />
 
         <div class="row">
             <div class="col-md-6">
@@ -27,10 +27,12 @@
                 <input class="form-control" type="number" th:field="*{numCamiseta}" />
 
                 <label class="form-label mt-2">Fecha de nacimiento</label>
-                <input class="form-control" type="date" th:field="*{fechaNacimiento}" />
+                <input class="form-control" type="date" name="fechaNacimiento" id="fechaNacimiento"
+                    th:value="${portero.fechaNacimiento != null ? portero.fechaNacimiento.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) : ''}" />
 
                 <label class="form-label mt-2">Fecha inicio contrato</label>
-                <input class="form-control" type="date" th:field="*{fechaInicioContrato}" />
+                <input class="form-control" type="date" name="fechaInicioContrato" id="fechaInicioContrato"
+                    th:value="${portero.fechaInicioContrato != null ? portero.fechaInicioContrato.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) : ''}" />
 
                 <label class="form-label mt-2">Mano dominante</label>
                 <select class="form-select" th:field="*{manoDominante}">
@@ -61,6 +63,8 @@
 
             <div class="col-md-6">
                 <h5>Estadísticas</h5>
+                <!-- Ensure binder knows which concrete subclass to create when binding nested estadisticas -->
+                <input type="hidden" name="estadisticas.class" value="com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero" />
                 <label class="form-label mt-1">Minutos jugados</label>
                 <input class="form-control" type="number" step="0.1" th:field="*{estadisticas.minJugados}" />
 
@@ -72,6 +76,9 @@
 
                 <label class="form-label mt-1">Tarjetas amarillas</label>
                 <input class="form-control" type="number" th:field="*{estadisticas.tarAmarilla}" />
+
+                <label class="form-label mt-1">Tarjetas rojas</label>
+                <input class="form-control" type="number" th:field="*{estadisticas.tarRoja}" />
 
                 <label class="form-label mt-1">Calificación</label>
                 <input class="form-control" type="number" step="0.1" th:field="*{estadisticas.calificacion}" />

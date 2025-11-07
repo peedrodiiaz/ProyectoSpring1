@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.realbetis.MainController;
 
-import com.salesianostriana.dam.realbetis.Equipo.Model.Equipo;
+
 import com.salesianostriana.dam.realbetis.Equipo.repository.EquipoRepository;
 import com.salesianostriana.dam.realbetis.Equipo.service.EquipoService;
 
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.salesianostriana.dam.realbetis.Jugador.repository.FutbolistaRepository;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller

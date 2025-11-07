@@ -152,11 +152,9 @@
 								</div>
 							</div>
 
-							<div class="col-6 col-sm-4 col-md-3" th:if="${esPortero}">
-								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${paradas}"></div>
-									<div class="stat-label">Paradas</div>
-								</div>
+							<div th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)}">
+								<p>Paradas: <span th:text="${estadisticas.paradas}">0</span></p>
+								<p>Porterías a cero: <span th:text="${estadisticas.porteriasACero}">0</span></p>
 							</div>
 
 							<div class="col-6 col-sm-4 col-md-3" th:if="${esPortero}">
@@ -166,19 +164,9 @@
 								</div>
 							</div>
 
-							<div class="col-6 col-sm-4 col-md-3" th:if="${esJugador}">
-								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${goles}"></div>
-									<div class="stat-label">Goles</div>
-								</div>
-							</div>
-
-							<!-- Asistencias (solo jugadores) -->
-							<div class="col-6 col-sm-4 col-md-3" th:if="${esJugador}">
-								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${asistencias}"></div>
-									<div class="stat-label">Asistencias</div>
-								</div>
+							<div th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}">
+								<p>Goles: <span th:text="${estadisticas.goles}">0</span></p>
+								<p>Asistencias: <span th:text="${estadisticas.asistencias}">0</span></p>
 							</div>
 
 							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas != null}">

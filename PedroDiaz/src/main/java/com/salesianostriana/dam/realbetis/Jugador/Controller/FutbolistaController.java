@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.salesianostriana.dam.realbetis.DTOs.JugadorEditDTO;
 import com.salesianostriana.dam.realbetis.DTOs.PorteroEditDTO;
 import com.salesianostriana.dam.realbetis.Equipo.service.EquipoService;
-import com.salesianostriana.dam.realbetis.Estadisticas.Model.Estadisticas;
+
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador;
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero;
 import com.salesianostriana.dam.realbetis.Jugador.Model.Futbolista;
@@ -38,39 +38,16 @@ public class FutbolistaController {
         return "redirect:/equipos/" + eqId;
     }
 
-    @GetMapping("/{id}")
-    public String getFutbolista(@PathVariable Long id, Model model){
-        Futbolista futbolista = futbolistaService.findFutbolistaById(id);
-        double bonus = futbolistaService.calcularBonusSalario(id);
-        double sueldoFinal = futbolistaService.calcularSalarioFutbolista(id);
-        Estadisticas estadisticas = futbolista.getEstadisticas();
-        
-        model.addAttribute("futbolista", futbolista);
-        model.addAttribute("estadisticas", estadisticas);
-        
     
-        boolean esJugador = estadisticas instanceof EstadisticasJugador;
-        boolean esPortero = estadisticas instanceof EstadisticasPortero;
-        
-        model.addAttribute("esJugador", esJugador);
-        model.addAttribute("esPortero", esPortero);
-        
-
-        if (esJugador) {
-            EstadisticasJugador ej = (EstadisticasJugador) estadisticas;
-            model.addAttribute("goles", ej.getGoles());
-            model.addAttribute("asistencias", ej.getAsistencias());
-        }
-        
-        if (esPortero) {
-            EstadisticasPortero ep = (EstadisticasPortero) estadisticas;
-            model.addAttribute("paradas", ep.getParadas());
-            model.addAttribute("porteriasACero", ep.getPorteriasACero());
-        }
-        
-        model.addAttribute("bonus", bonus);
-        model.addAttribute("sueldoFinal", sueldoFinal);
+    @GetMapping("/{id}")
+    public String getFutbolista(@PathVariable Long id, Model model) {
+        Futbolista futbolista = futbolistaService.findFutbolistaById(id);
+        model.addAttribute("futbolista", futbolista);
+        model.addAttribute("estadisticas", futbolista.getEstadisticas());
+        model.addAttribute("bonus", futbolistaService.calcularBonusSalario(id));
+        model.addAttribute("sueldoFinal", futbolistaService.calcularSalarioFutbolista(id));
         return "info_futbolista";
+
 }
 
 
@@ -84,26 +61,7 @@ public class FutbolistaController {
         EstadisticasJugador stats = (EstadisticasJugador) jugador.getEstadisticas();
         
         // Crear DTO con los datos actuales
-        JugadorEditDTO dto = JugadorEditDTO.builder()
-            .id(jugador.getId())
-            .nombre(jugador.getNombre())
-            .apellidos(jugador.getApellidos())
-            .numCamiseta(jugador.getNumCamiseta())
-            .fechaNacimiento(jugador.getFechaNacimiento())
-            .fechaInicioContrato(jugador.getFechaInicioContrato())
-            .posicion(jugador.getPosicion())
-            .piernaBuena(jugador.getPiernaBuena())
-            .imgFutbolista(jugador.getImgFutbolista())
-            .salarioMensualBase(jugador.getSalarioMensualBase())
-            .equipoId(jugador.getEquipo().getId())
-            .estadisticasId(stats.getId())
-            .minJugados(stats.getMinJugados())
-            .goles(stats.getGoles())
-            .asistencias(stats.getAsistencias())
-            .tarAmarilla(stats.getTarAmarilla())
-            .tarRoja(stats.getTarRoja())
-            .calificacion(stats.getCalificacion())
-            .build();
+        JugadorEditDTO dto = JugadorEditDTO.fromJugador(jugador, stats);
 
         model.addAttribute("jugador", dto);
         model.addAttribute("equipos", equipoService.findAll());
@@ -122,29 +80,10 @@ public class FutbolistaController {
             
             Portero portero = (Portero) f;
             EstadisticasPortero stats = (EstadisticasPortero) portero.getEstadisticas();
-            
+    
             // Crear DTO con los datos actuales
-            PorteroEditDTO dto = PorteroEditDTO.builder()
-                .id(portero.getId())
-                .nombre(portero.getNombre())
-                .apellidos(portero.getApellidos())
-                .numCamiseta(portero.getNumCamiseta())
-                .fechaNacimiento(portero.getFechaNacimiento())
-                .fechaInicioContrato(portero.getFechaInicioContrato())
-                .manoDominante(portero.getManoDominante())
-                .piernaBuena(portero.getPiernaBuena())
-                .imgFutbolista(portero.getImgFutbolista())
-                .salarioMensualBase(portero.getSalarioMensualBase())
-                .equipoId(portero.getEquipo().getId())
-                .estadisticasId(stats.getId())
-                .minJugados(stats.getMinJugados())
-                .paradas(stats.getParadas())
-                .porteriasACero(stats.getPorteriasACero())
-                .tarAmarilla(stats.getTarAmarilla())
-                .tarRoja(stats.getTarRoja())
-                .calificacion(stats.getCalificacion())
-                .build();
-            
+
+            PorteroEditDTO dto = PorteroEditDTO.fromPortero(portero, stats);
             model.addAttribute("portero", dto);
             model.addAttribute("equipos", equipoService.findAll());
             return "edit_portero";

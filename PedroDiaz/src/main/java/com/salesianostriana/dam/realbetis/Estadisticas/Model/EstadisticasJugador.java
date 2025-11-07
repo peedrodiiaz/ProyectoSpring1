@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Entity
 @SuperBuilder
-@DiscriminatorValue("JUGADOR")
+@DiscriminatorValue("EstadisticasJugador")
 public class EstadisticasJugador extends Estadisticas{
     private int goles;
     private int asistencias;

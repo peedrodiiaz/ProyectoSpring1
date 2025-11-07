@@ -16,13 +16,13 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) 
-@DiscriminatorColumn(name = "tipo_estadistica") 
+@DiscriminatorColumn(name = "DTYPE") 
 public class Estadisticas {
 
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "futbolista_id")
     @ToString.Exclude
     private Futbolista futbolista;

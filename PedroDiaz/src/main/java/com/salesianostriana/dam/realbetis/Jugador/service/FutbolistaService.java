@@ -5,6 +5,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.salesianostriana.dam.realbetis.DTOs.JugadorEditDTO;
+import com.salesianostriana.dam.realbetis.DTOs.PorteroEditDTO;
+import com.salesianostriana.dam.realbetis.Equipo.service.EquipoService;
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.Estadisticas;
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador;
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero;
@@ -21,11 +24,13 @@ import java.util.List;
 public class FutbolistaService {
     private final FutbolistaRepository futbolistaRepository;
     private final EstadisticasService estadisticasService;
+    private final EquipoService equipoService;
 
     public FutbolistaService(JugadorRepository jugadorRepository,
                             FutbolistaRepository futbolistaRepository,
+                            EquipoService equipoService,
                             @Lazy EstadisticasService estadisticasService) {
-        
+        this.equipoService = equipoService;
         this.futbolistaRepository = futbolistaRepository;
         this.estadisticasService = estadisticasService;
     }
@@ -59,70 +64,76 @@ public class FutbolistaService {
         }
 
     //EDITAR
-    private void actualizarEstadisticasJugador(Futbolista existente, Futbolista nuevo) {
-    Estadisticas statsExistentes = existente.getEstadisticas();
-    Estadisticas statsNuevas = nuevo.getEstadisticas();
-    
-    if (statsExistentes instanceof EstadisticasJugador && 
-        statsNuevas instanceof EstadisticasJugador) {
+    // Jugador
+    public Futbolista updateJugador(Long id, JugadorEditDTO dto) {
+        Futbolista futbolista = findFutbolistaById(id);
         
-        EstadisticasJugador ej = (EstadisticasJugador) statsExistentes;
-        EstadisticasJugador ejNuevas = (EstadisticasJugador) statsNuevas;
+        Jugador jugador = (Jugador) futbolista;
         
-        ej.setMinJugados(ejNuevas.getMinJugados());
-        ej.setGoles(ejNuevas.getGoles());
-        ej.setAsistencias(ejNuevas.getAsistencias());
-        ej.setTarAmarilla(ejNuevas.getTarAmarilla());
-        ej.setTarRoja(ejNuevas.getTarRoja());
-        ej.setCalificacion(ejNuevas.getCalificacion());
-    }
-}
-    private void actualizarEstadisticasPortero(Futbolista existente, Futbolista nuevo) {
-        Estadisticas statsExistentes = existente.getEstadisticas();
-        Estadisticas statsNuevas = nuevo.getEstadisticas();
+
+        jugador.setNombre(dto.getNombre());
+        jugador.setApellidos(dto.getApellidos());
+        jugador.setNumCamiseta(dto.getNumCamiseta());
+        jugador.setFechaNacimiento(dto.getFechaNacimiento());
+        jugador.setFechaInicioContrato(dto.getFechaInicioContrato());
+        jugador.setPiernaBuena(dto.getPiernaBuena());
+        jugador.setImgFutbolista(dto.getImgFutbolista());
+        jugador.setSalarioMensualBase(dto.getSalarioMensualBase());
+        jugador.setPosicion(dto.getPosicion());
         
-        if (statsExistentes instanceof EstadisticasPortero && 
-            statsNuevas instanceof EstadisticasPortero) {
-            
-            EstadisticasPortero ep = (EstadisticasPortero) statsExistentes;
-            EstadisticasPortero epNuevas = (EstadisticasPortero) statsNuevas;
-            
-            ep.setMinJugados(epNuevas.getMinJugados());
-            ep.setParadas(epNuevas.getParadas());
-            ep.setPorteriasACero(epNuevas.getPorteriasACero());
-            ep.setTarAmarilla(epNuevas.getTarAmarilla());
-            ep.setTarRoja(epNuevas.getTarRoja());
-            ep.setCalificacion(epNuevas.getCalificacion());
+        
+        if (dto.getEquipoId() != null) {
+            jugador.setEquipo(equipoService.findById(dto.getEquipoId()));
         }
+        
+        // Actualizar estadísticas
+        if (jugador.getEstadisticas() instanceof EstadisticasJugador) {
+            EstadisticasJugador stats = (EstadisticasJugador) jugador.getEstadisticas();
+            stats.setMinJugados(dto.getMinJugados());
+            stats.setGoles(dto.getGoles());
+            stats.setAsistencias(dto.getAsistencias());
+            stats.setTarAmarilla(dto.getTarAmarilla());
+            stats.setTarRoja(dto.getTarRoja());
+            stats.setCalificacion(dto.getCalificacion());
+        }
+        
+        return futbolistaRepository.save(jugador);
 }
 
+//Portero
+    public Futbolista updatePortero(Long id, PorteroEditDTO dto) {
+        Futbolista futbolista = findFutbolistaById(id);
+        
+        Portero portero = (Portero) futbolista;
     
-
-    public Futbolista updateFutbolista(Long id, Futbolista futbolista) {
-        Futbolista f = findFutbolistaById(id);
-
-        // Actualizar datos básicos
-        f.setNombre(futbolista.getNombre());
-        f.setApellidos(futbolista.getApellidos());
-        f.setNumCamiseta(futbolista.getNumCamiseta());
-        f.setFechaNacimiento(futbolista.getFechaNacimiento());
-        f.setFechaInicioContrato(futbolista.getFechaInicioContrato());
-        f.setImgFutbolista(futbolista.getImgFutbolista());
-        f.setSalarioMensualBase(futbolista.getSalarioMensualBase());
-        f.setPiernaBuena(futbolista.getPiernaBuena());
-        f.setEquipo(futbolista.getEquipo());
-
-        // Actualizar según tipo específico
-        if (futbolista instanceof Jugador && f instanceof Jugador) {
-            ((Jugador) f).setPosicion(((Jugador) futbolista).getPosicion());
-            actualizarEstadisticasJugador(f, futbolista);
-        } else if (futbolista instanceof Portero && f instanceof Portero) {
-            ((Portero) f).setManoDominante(((Portero) futbolista).getManoDominante());
-            actualizarEstadisticasPortero(f, futbolista);
+        portero.setNombre(dto.getNombre());
+        portero.setApellidos(dto.getApellidos());
+        portero.setNumCamiseta(dto.getNumCamiseta());
+        portero.setFechaNacimiento(dto.getFechaNacimiento());
+        portero.setFechaInicioContrato(dto.getFechaInicioContrato());
+        portero.setPiernaBuena(dto.getPiernaBuena());
+        portero.setImgFutbolista(dto.getImgFutbolista());
+        portero.setSalarioMensualBase(dto.getSalarioMensualBase());
+        portero.setManoDominante(dto.getManoDominante());
+        
+    
+        if (dto.getEquipoId() != null) {
+            portero.setEquipo(equipoService.findById(dto.getEquipoId()));
         }
+        
+        if (portero.getEstadisticas() instanceof EstadisticasPortero) {
+            EstadisticasPortero stats = (EstadisticasPortero) portero.getEstadisticas();
+            stats.setMinJugados(dto.getMinJugados());
+            stats.setParadas(dto.getParadas());
+            stats.setPorteriasACero(dto.getPorteriasACero());
+            stats.setTarAmarilla(dto.getTarAmarilla());
+            stats.setTarRoja(dto.getTarRoja());
+            stats.setCalificacion(dto.getCalificacion());
+        }
+        
+        return futbolistaRepository.save(portero);
+}
 
-        return futbolistaRepository.save(f);
-    }
 
 
     public double calcularBonusSalario(Long id){

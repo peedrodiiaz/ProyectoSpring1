@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.salesianostriana.dam.realbetis.DTOs.JugadorEditDTO;
+import com.salesianostriana.dam.realbetis.DTOs.PorteroEditDTO;
 import com.salesianostriana.dam.realbetis.Equipo.service.EquipoService;
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.Estadisticas;
 import com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador;
@@ -46,14 +48,14 @@ public class FutbolistaController {
         model.addAttribute("futbolista", futbolista);
         model.addAttribute("estadisticas", estadisticas);
         
-        // Flags para saber qué tipo es
+    
         boolean esJugador = estadisticas instanceof EstadisticasJugador;
         boolean esPortero = estadisticas instanceof EstadisticasPortero;
         
         model.addAttribute("esJugador", esJugador);
         model.addAttribute("esPortero", esPortero);
         
-        // Pasar campos específicos
+
         if (esJugador) {
             EstadisticasJugador ej = (EstadisticasJugador) estadisticas;
             model.addAttribute("goles", ej.getGoles());
@@ -72,51 +74,85 @@ public class FutbolistaController {
 }
 
 
-        // @GetMapping ("{id}/edit")
-        // public String formEdit (@PathVariable Long id, Model model){
-        //     Futbolista f = futbolistaService.findFutbolistaById(id);
-        //     model.addAttribute("futbolista",f);
-        //     model.addAttribute("estadisticas", f.getEstadisticas());
-        //     model.addAttribute("equipo",equipoService.findAll());
-        //     return "edit_futbolista";
-        // }
-
-
-        // @PostMapping("{id}/edit")
-        // public String editFutbolista (@PathVariable Long id, @ModelAttribute("futbolista") Futbolista f){
-        //     futbolistaService.upadateFutbolista(id, f);
-        //     return "redirect:/futbolistas/" + id;
-        // }
-
     /*  editar para cuando es ugador */
     @GetMapping("/jugador/{id}/edit")
-    public String editFormJugador(@PathVariable Long id, Model model){
+    public String editFormJugador(@PathVariable Long id, Model model) {
         Futbolista f = futbolistaService.findFutbolistaById(id);
-        model.addAttribute("jugador", (Jugador) f);
-        model.addAttribute("estadisticas",(EstadisticasJugador) f.getEstadisticas());
-        model.addAttribute("equipo", equipoService.findAll());
+
+        
+        Jugador jugador = (Jugador) f;
+        EstadisticasJugador stats = (EstadisticasJugador) jugador.getEstadisticas();
+        
+        // Crear DTO con los datos actuales
+        JugadorEditDTO dto = JugadorEditDTO.builder()
+            .id(jugador.getId())
+            .nombre(jugador.getNombre())
+            .apellidos(jugador.getApellidos())
+            .numCamiseta(jugador.getNumCamiseta())
+            .fechaNacimiento(jugador.getFechaNacimiento())
+            .fechaInicioContrato(jugador.getFechaInicioContrato())
+            .posicion(jugador.getPosicion())
+            .piernaBuena(jugador.getPiernaBuena())
+            .imgFutbolista(jugador.getImgFutbolista())
+            .salarioMensualBase(jugador.getSalarioMensualBase())
+            .equipoId(jugador.getEquipo().getId())
+            .estadisticasId(stats.getId())
+            .minJugados(stats.getMinJugados())
+            .goles(stats.getGoles())
+            .asistencias(stats.getAsistencias())
+            .tarAmarilla(stats.getTarAmarilla())
+            .tarRoja(stats.getTarRoja())
+            .calificacion(stats.getCalificacion())
+            .build();
+
+        model.addAttribute("jugador", dto);
+        model.addAttribute("equipos", equipoService.findAll());
         return "edit_jugador";
     }
 
     @PostMapping("/jugador/{id}/edit")
-    public String saveJugador(@PathVariable Long id, @ModelAttribute("jugador") Jugador jugador){
-        futbolistaService.updateFutbolista(id, jugador);
-        return "redirect:/futbolistas/" + id;
+        public String saveJugador(@PathVariable Long id, @ModelAttribute("jugador") JugadorEditDTO dto) {
+            futbolistaService.updateJugador(id, dto);
+            return "redirect:/futbolistas/" + id;
     }
     /*EDitar cuando es portero */
     @GetMapping("/portero/{id}/edit")
-    public String editFormPortero(@PathVariable Long id, Model model){
-        Futbolista f = futbolistaService.findFutbolistaById(id);
-        
-        model.addAttribute("portero", (Portero) f);
-        model.addAttribute("estadisticas",(EstadisticasPortero) f.getEstadisticas());
-        model.addAttribute("equipo", equipoService.findAll());
-        return "edit_portero";
+        public String editFormPortero(@PathVariable Long id, Model model) {
+            Futbolista f = futbolistaService.findFutbolistaById(id);
+            
+            Portero portero = (Portero) f;
+            EstadisticasPortero stats = (EstadisticasPortero) portero.getEstadisticas();
+            
+            // Crear DTO con los datos actuales
+            PorteroEditDTO dto = PorteroEditDTO.builder()
+                .id(portero.getId())
+                .nombre(portero.getNombre())
+                .apellidos(portero.getApellidos())
+                .numCamiseta(portero.getNumCamiseta())
+                .fechaNacimiento(portero.getFechaNacimiento())
+                .fechaInicioContrato(portero.getFechaInicioContrato())
+                .manoDominante(portero.getManoDominante())
+                .piernaBuena(portero.getPiernaBuena())
+                .imgFutbolista(portero.getImgFutbolista())
+                .salarioMensualBase(portero.getSalarioMensualBase())
+                .equipoId(portero.getEquipo().getId())
+                .estadisticasId(stats.getId())
+                .minJugados(stats.getMinJugados())
+                .paradas(stats.getParadas())
+                .porteriasACero(stats.getPorteriasACero())
+                .tarAmarilla(stats.getTarAmarilla())
+                .tarRoja(stats.getTarRoja())
+                .calificacion(stats.getCalificacion())
+                .build();
+            
+            model.addAttribute("portero", dto);
+            model.addAttribute("equipos", equipoService.findAll());
+            return "edit_portero";
     }
 
     @PostMapping("/portero/{id}/edit")
-    public String savePortero(@PathVariable Long id, @ModelAttribute("portero") Portero portero){
-        futbolistaService.updateFutbolista(id, portero);
+    public String savePortero(@PathVariable Long id, @ModelAttribute("portero") PorteroEditDTO dto) {
+        futbolistaService.updatePortero(id, dto);
         return "redirect:/futbolistas/" + id;
     }
     

@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.realbetis.Estadisticas.Model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -11,9 +12,12 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@DiscriminatorValue("PORTERO")
+@DiscriminatorValue("EstadisticasPortero")
 public class EstadisticasPortero extends Estadisticas{
+    
     private int paradas;
+    
+    @Column(name = "porteriasacero")
     private int porteriasACero;
 
 

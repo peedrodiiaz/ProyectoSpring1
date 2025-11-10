@@ -67,40 +67,45 @@ public class FutbolistaService {
     // Jugador
     public Futbolista updateJugador(Long id, JugadorEditDTO dto) {
         Futbolista futbolista = findFutbolistaById(id);
-        
+        boolean hacer =false;
         Jugador jugador = (Jugador) futbolista;
         
+        
 
-        jugador.setNombre(dto.getNombre());
-        jugador.setApellidos(dto.getApellidos());
-        jugador.setNumCamiseta(dto.getNumCamiseta());
-        jugador.setFechaNacimiento(dto.getFechaNacimiento());
-        jugador.setFechaInicioContrato(dto.getFechaInicioContrato());
-        jugador.setPiernaBuena(dto.getPiernaBuena());
-        jugador.setImgFutbolista(dto.getImgFutbolista());
-        jugador.setSalarioMensualBase(dto.getSalarioMensualBase());
-        jugador.setPosicion(dto.getPosicion());
-        
-        
-        if (dto.getEquipoId() != null) {
+
+
+        if (hacer) {
+            jugador.setNombre(dto.getNombre());
+            jugador.setApellidos(dto.getApellidos());
+            jugador.setNumCamiseta(dto.getNumCamiseta());
+            jugador.setFechaNacimiento(dto.getFechaNacimiento());
+            jugador.setFechaInicioContrato(dto.getFechaInicioContrato());
+            jugador.setPiernaBuena(dto.getPiernaBuena());
+            jugador.setImgFutbolista(dto.getImgFutbolista());
+            jugador.setSalarioMensualBase(dto.getSalarioMensualBase());
+            jugador.setPosicion(dto.getPosicion());
+            
             jugador.setEquipo(equipoService.findById(dto.getEquipoId()));
+            
+            
+            // Actualizar estadísticas
+            if (jugador.getEstadisticas() instanceof EstadisticasJugador) {
+                EstadisticasJugador stats = (EstadisticasJugador) jugador.getEstadisticas();
+                stats.setMinJugados(dto.getMinJugados());
+                stats.setGoles(dto.getGoles());
+                stats.setAsistencias(dto.getAsistencias());
+                stats.setTarAmarilla(dto.getTarAmarilla());
+                stats.setTarRoja(dto.getTarRoja());
+                stats.setCalificacion(dto.getCalificacion());
+            }
+            return futbolistaRepository.save(jugador);
+        }else {
+            return null;
         }
-        
-        // Actualizar estadísticas
-        if (jugador.getEstadisticas() instanceof EstadisticasJugador) {
-            EstadisticasJugador stats = (EstadisticasJugador) jugador.getEstadisticas();
-            stats.setMinJugados(dto.getMinJugados());
-            stats.setGoles(dto.getGoles());
-            stats.setAsistencias(dto.getAsistencias());
-            stats.setTarAmarilla(dto.getTarAmarilla());
-            stats.setTarRoja(dto.getTarRoja());
-            stats.setCalificacion(dto.getCalificacion());
-        }
-        
-        return futbolistaRepository.save(jugador);
+
 }
 
-//Portero
+    //Portero
     public Futbolista updatePortero(Long id, PorteroEditDTO dto) {
         Futbolista futbolista = findFutbolistaById(id);
         

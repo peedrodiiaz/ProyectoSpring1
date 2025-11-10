@@ -41,7 +41,7 @@ public class EquipoController {
 
     @GetMapping ("/{id}/ordenarMaxAsistencias")
     public String ordenarMaxAsitencias (@PathVariable Long id, Model m){
-        m.addAttribute("futbolistas", equipoService.findMaxAsistentes(id));
+        m.addAttribute("futbolistas", equipoService.findMaxAsistencias(id));
         m.addAttribute("equipo", equipoService.findById(id));
 
         return "info_equipo";

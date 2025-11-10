@@ -34,9 +34,6 @@ public class EquipoService {
         return equipoRepository.findAll();
     }
 
-    
-
-
     public Equipo findById (Long id){
         return equipoRepository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException(id+"No encontrado"));
@@ -53,7 +50,7 @@ public class EquipoService {
         if (eq.getListFutbolistas()!=null) {
             eq.getListFutbolistas().forEach(f -> f.setEquipo(eq));
         }
-        System.out.println(eq);
+        
         return equipoRepository.save(eq);
 
     }
@@ -97,23 +94,31 @@ public class EquipoService {
             .collect(Collectors.toList());
     }
 
+    // public List <Jugador> findMaxGoleadoresv2 (Long id) {
+    //     return equipoRepository.findTopByEquipoOrderByGolesDesc(id);
+    // }
 
-    public List <Jugador> findMaxAsistentes(Long id){
 
+    // public List <Jugador> findMaxAsistentes(Long id){
+
+    //     return equipoRepository.findTopByEquipoOrderByAsistDesc(id);
+
+    // }
+
+    public List<Jugador> findMaxAsistencias(Long id) {
+        
         return equipoRepository.findById(id).stream()
-            .flatMap(e->e.getListFutbolistas().stream())
-            .filter(f-> f instanceof Jugador)
-            .map( f -> (Jugador) f)
-            .sorted ((j1,j2)->{
-                int asis1 = ((EstadisticasJugador)estadisticasService.getEstadisticasByFutbolista(j1.getId())).getAsistencias();
-                int asis2 = ((EstadisticasJugador)estadisticasService.getEstadisticasByFutbolista(j2.getId())).getAsistencias();
-                return Integer.compare(asis2, asis1);
+            .flatMap(e -> e.getListFutbolistas().stream())
+            .filter(f -> f instanceof Jugador)
+            .map(f -> (Jugador) f)
+            .sorted((j1, j2) -> {
+                int  asis1 = ((EstadisticasJugador) estadisticasService.getEstadisticasByFutbolista(j1.getId())).getAsistencias();
+                int  asis2 = ((EstadisticasJugador) estadisticasService.getEstadisticasByFutbolista(j2.getId())).getAsistencias();
+                return Integer.compare(asis2, asis1); 
+
             })
             
             .collect(Collectors.toList());
-
-
-
     }
 
 

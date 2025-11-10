@@ -55,10 +55,8 @@ public class FutbolistaController {
     @GetMapping("/jugador/{id}/edit")
     public String editFormJugador(@PathVariable Long id, Model model) {
         Futbolista f = futbolistaService.findFutbolistaById(id);
-
-        
         Jugador jugador = (Jugador) f;
-        EstadisticasJugador stats = (EstadisticasJugador) jugador.getEstadisticas();
+        EstadisticasJugador stats = (EstadisticasJugador) jugador.getEstadisticas();     
         
         // Crear DTO con los datos actuales
         JugadorEditDTO dto = JugadorEditDTO.fromJugador(jugador, stats);
@@ -70,9 +68,14 @@ public class FutbolistaController {
 
     @PostMapping("/jugador/{id}/edit")
         public String saveJugador(@PathVariable Long id, @ModelAttribute("jugador") JugadorEditDTO dto) {
-            futbolistaService.updateJugador(id, dto);
-            return "redirect:/futbolistas/" + id;
-    }
+            if(futbolistaService.updateJugador(id, dto)== null){
+                return "edit_jugador";
+            }else{
+                return "redirect:/futbolistas/" + id;
+            }
+
+        }
+
     /*EDitar cuando es portero */
     @GetMapping("/portero/{id}/edit")
         public String editFormPortero(@PathVariable Long id, Model model) {
@@ -82,7 +85,6 @@ public class FutbolistaController {
             EstadisticasPortero stats = (EstadisticasPortero) portero.getEstadisticas();
     
             // Crear DTO con los datos actuales
-
             PorteroEditDTO dto = PorteroEditDTO.fromPortero(portero, stats);
             model.addAttribute("portero", dto);
             model.addAttribute("equipos", equipoService.findAll());

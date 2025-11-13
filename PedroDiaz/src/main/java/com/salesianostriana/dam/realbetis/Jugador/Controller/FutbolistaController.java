@@ -31,6 +31,7 @@ public class FutbolistaController {
     private final EquipoService equipoService;
 
     
+    //ELIMINAR
 
     @PostMapping("/{eqid}/eliminarFutbolista/{id}")
     public String deleteFutbolista(@PathVariable("eqid") Long eqId, @PathVariable("id") Long id){
@@ -38,6 +39,7 @@ public class FutbolistaController {
         return "redirect:/equipos/" + eqId;
     }
 
+    //LISTAR
     
     @GetMapping("/{id}")
     public String getFutbolista(@PathVariable Long id, Model model) {
@@ -50,8 +52,9 @@ public class FutbolistaController {
 
 }
 
+    //EDITAR
 
-    /*  editar para cuando es ugador */
+    /*  editar para cuando es Jugador */
     @GetMapping("/jugador/{id}/edit")
     public String editFormJugador(@PathVariable Long id, Model model) {
         Futbolista f = futbolistaService.findFutbolistaById(id);
@@ -97,6 +100,23 @@ public class FutbolistaController {
         return "redirect:/futbolistas/" + id;
     }
     
+
+    //ANIADIR
+    @PostMapping ("{id}/jugador/add")
+    public String addJugador(@PathVariable Long id, @ModelAttribute("jugador") Jugador j){
+
+        futbolistaService.createJugador(j);
+
+        return "redirect:/futbolistas/" + j.getId();
+    }    
+    
+    @GetMapping ("{id}/jugador/add")
+    public String addJugador (@PathVariable Long id,Model model){
+        model.addAttribute("jugador", new Jugador());
+        model.addAttribute("equipo", equipoService.findById(id));
+        return "add_jugador";
+    }
+
     
 
 

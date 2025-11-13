@@ -43,7 +43,13 @@
 
                 <div class="d-flex gap-2 align-items-center mt-3 mt-md-0">
                     <a th:if="${equipo != null}" th:href="@{/equipos/{id}/edit(id=${equipo.id})}" class="btn nav-betis-link">Editar equipo</a>
-
+                    <select class="form-select form-select-sm" onchange="window.location=this.value">
+                            <option selected value="">Añadir futbolista</option>
+                            <option th:value="@{/equipos/{id}/jugador/add(id=${equipo.id})}">Jugador</option>
+                            <option th:value="@{/equipos/{id}/portero/add(id=${equipo.id})}">Portero</option>
+                            
+                        </select>
+                    
                     <div th:if="${equipo != null}">
                         <select class="form-select form-select-sm" onchange="window.location=this.value">
                             <option selected value="">Elige una opción</option>

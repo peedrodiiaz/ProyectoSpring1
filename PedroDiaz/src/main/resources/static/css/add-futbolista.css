@@ -1,0 +1,33 @@
+/* Styles for Add Jugador form */
+.container.add-form {
+    max-width: 980px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(12, 38, 63, 0.06);
+    padding: 20px 24px;
+}
+
+.add-form h3 {
+    font-weight: 600;
+    color: #1f2d3d;
+}
+
+.form-label {
+    font-size: 0.95rem;
+    color: #374151;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+img[alt="foto"] {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 767px){
+    .container.add-form {
+        padding: 12px;
+    }
+}

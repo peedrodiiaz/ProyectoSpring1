@@ -46,9 +46,7 @@ public class FutbolistaService {
     }
 
 
-    public Futbolista createFutbolista(Futbolista futbolista) {
-        return futbolistaRepository.save(futbolista);
-    }
+    
 
     public void deleteFutbolista(Long id) {
         
@@ -67,12 +65,14 @@ public class FutbolistaService {
     // Jugador
     public Futbolista updateJugador(Long id, JugadorEditDTO dto) {
         Futbolista futbolista = findFutbolistaById(id);
-        boolean hacer =false;
+        boolean hacer =true;
+        List <Futbolista> listaFutbolistas = futbolista.getEquipo().getListFutbolistas();
         Jugador jugador = (Jugador) futbolista;
+        hacer = listaFutbolistas.stream()
+            .filter(f-> f instanceof Jugador)
+            .map(f-> (Jugador)f)
+            .allMatch(f-> f.getNumCamiseta() != futbolista.getNumCamiseta());
         
-        
-
-
 
         if (hacer) {
             jugador.setNombre(dto.getNombre());
@@ -98,19 +98,28 @@ public class FutbolistaService {
                 stats.setTarRoja(dto.getTarRoja());
                 stats.setCalificacion(dto.getCalificacion());
             }
-            return futbolistaRepository.save(jugador);
         }else {
             return null;
-        }
+        }            
+        return futbolistaRepository.save(jugador);
+
 
 }
 
     //Portero
     public Futbolista updatePortero(Long id, PorteroEditDTO dto) {
         Futbolista futbolista = findFutbolistaById(id);
-        
+            List <Futbolista> listaFutbolistas = futbolista.getEquipo().getListFutbolistas();
+
         Portero portero = (Portero) futbolista;
+        boolean hacer = listaFutbolistas.stream()
+            .filter(f-> f instanceof Portero)
+            .map(f-> (Portero)f)
+            .allMatch(f-> f.getNumCamiseta() != futbolista.getNumCamiseta());
     
+        if (hacer) {
+            
+        
         portero.setNombre(dto.getNombre());
         portero.setApellidos(dto.getApellidos());
         portero.setNumCamiseta(dto.getNumCamiseta());
@@ -135,12 +144,16 @@ public class FutbolistaService {
             stats.setTarRoja(dto.getTarRoja());
             stats.setCalificacion(dto.getCalificacion());
         }
+    }else{
+        return null;
+    }
+        
         
         return futbolistaRepository.save(portero);
 }
 
 
-
+    //Lógica de bonus
     public double calcularBonusSalario(Long id){
         int totalGoles = 0, totalAsistencias = 0;
         double extras=0.0, golesBonus=1000, asistenciasBonus=500, restarPorAmarilla=250, restarPorRoja=450;
@@ -184,7 +197,9 @@ public class FutbolistaService {
     }
 
     
-    
+    public Futbolista createJugador(Jugador jugador) {
+        return futbolistaRepository.save((Jugador) jugador);
+    }
     
 }
 

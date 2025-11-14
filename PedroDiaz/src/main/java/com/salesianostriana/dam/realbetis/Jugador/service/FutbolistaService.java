@@ -65,13 +65,15 @@ public class FutbolistaService {
     // Jugador
     public Futbolista updateJugador(Long id, JugadorEditDTO dto) {
         Futbolista futbolista = findFutbolistaById(id);
-        boolean hacer =true;
+        boolean hacer = true;
         List <Futbolista> listaFutbolistas = futbolista.getEquipo().getListFutbolistas();
         Jugador jugador = (Jugador) futbolista;
+        // Comprobar que ningún otro jugador (excepto el que editamos) tiene el mismo dorsal que el enviado en el DTO
         hacer = listaFutbolistas.stream()
-            .filter(f-> f instanceof Jugador)
-            .map(f-> (Jugador)f)
-            .allMatch(f-> f.getNumCamiseta() != futbolista.getNumCamiseta());
+            .filter(f -> f instanceof Jugador)
+            .map(f -> (Jugador) f)
+            .filter(f -> !f.getId().equals(id))
+            .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
         
 
         if (hacer) {
@@ -113,9 +115,10 @@ public class FutbolistaService {
 
         Portero portero = (Portero) futbolista;
         boolean hacer = listaFutbolistas.stream()
-            .filter(f-> f instanceof Portero)
-            .map(f-> (Portero)f)
-            .allMatch(f-> f.getNumCamiseta() != futbolista.getNumCamiseta());
+            .filter(f -> f instanceof Portero)
+            .map(f -> (Portero) f)
+            .filter(f -> !f.getId().equals(id))
+            .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
     
         if (hacer) {
             
@@ -198,7 +201,15 @@ public class FutbolistaService {
 
     
     public Futbolista createJugador(Jugador jugador) {
-        return futbolistaRepository.save((Jugador) jugador);
+        if (jugador.getEstadisticas() == null) {
+            EstadisticasJugador estadisticas = new EstadisticasJugador();
+            estadisticas.setFutbolista(jugador);
+            jugador.setEstadisticas(estadisticas);
+        }
+        if (jugador.getEquipo() != null && jugador.getEquipo().getId() != null) {
+            jugador.setEquipo(equipoService.findById(jugador.getEquipo().getId()));
+        }
+        return futbolistaRepository.save(jugador);
     }
     
 }

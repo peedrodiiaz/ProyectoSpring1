@@ -17,6 +17,7 @@ import com.salesianostriana.dam.realbetis.Estadisticas.Model.Estadisticas;
 @SuperBuilder
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn (name = "tipo")
+@ToString
 public abstract class Futbolista {
 
     @Id

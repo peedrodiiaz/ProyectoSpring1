@@ -48,8 +48,8 @@
                 </select>
 
                 <label class="form-label mt-2">Equipo</label>
-                <!-- equipo viene del controlador como atributo 'equipo' -->
-                <input type="hidden" name="equipo.id" th:value="${equipo != null ? equipo.id : ''}" />
+                
+                <input type="hidden" name="equipo.id" th:value="${equipo != null ? equipo.id : '' }" th:field="*{equipo}" />
                 <input class="form-control" readonly th:value="${equipo != null ? equipo.nombre : ''}" />
 
                 <label class="form-label mt-2">Imagen (URL)</label>
@@ -64,7 +64,6 @@
 
             <div class="col-md-6">
                 <h5>Estadísticas</h5>
-                <!-- Indicamos la clase concreta para que el binder cree la subclase correcta -->
                 <input type="hidden" name="estadisticas.class" value="com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador" />
 
                 <label class="form-label mt-1">Minutos jugados</label>

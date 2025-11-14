@@ -16,5 +16,9 @@ public class Jugador extends Futbolista{
     private String posicion;
 
 
-
+    @Override
+    public String toString() {
+        return  super.toString()+ ", posicion='" + posicion + '\'' +
+                '}';
+    }
 }

@@ -74,6 +74,7 @@ public class FutbolistaController {
             if(futbolistaService.updateJugador(id, dto)== null){
                 return "edit_jugador";
             }else{
+                
                 return "redirect:/futbolistas/" + id;
             }
 
@@ -96,7 +97,11 @@ public class FutbolistaController {
 
     @PostMapping("/portero/{id}/edit")
     public String savePortero(@PathVariable Long id, @ModelAttribute("portero") PorteroEditDTO dto) {
-        futbolistaService.updatePortero(id, dto);
+        
+        if ( futbolistaService.updatePortero(id, dto)==null) {
+            return "edit_portero";
+            
+        }
         return "redirect:/futbolistas/" + id;
     }
     
@@ -106,6 +111,8 @@ public class FutbolistaController {
     public String addJugador(@PathVariable Long id, @ModelAttribute("jugador") Jugador j){
 
         futbolistaService.createJugador(j);
+        System.out.println( j );
+        System.out.println( "holaaaaaaaa" );
 
         return "redirect:/futbolistas/" + j.getId();
     }    
@@ -116,8 +123,6 @@ public class FutbolistaController {
         model.addAttribute("equipo", equipoService.findById(id));
         return "add_jugador";
     }
-
-    
 
 
 }

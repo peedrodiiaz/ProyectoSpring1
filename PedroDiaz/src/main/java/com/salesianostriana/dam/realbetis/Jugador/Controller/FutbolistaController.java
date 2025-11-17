@@ -88,7 +88,6 @@ public class FutbolistaController {
             Portero portero = (Portero) f;
             EstadisticasPortero stats = (EstadisticasPortero) portero.getEstadisticas();
     
-            // Crear DTO con los datos actuales
             PorteroEditDTO dto = PorteroEditDTO.fromPortero(portero, stats);
             model.addAttribute("portero", dto);
             model.addAttribute("equipos", equipoService.findAll());
@@ -109,16 +108,14 @@ public class FutbolistaController {
     // ANIADIR
     @PostMapping ("{id}/jugador/add")
     public String addJugador(@PathVariable Long id, @ModelAttribute("jugador") JugadorEditDTO j){
-        futbolistaService.createJugador(j);
-        System.out.println( j );
-        System.out.println( "holaaaaaaaa" );
-
-        return "redirect:/futbolistas/" + j.getId();
+        Futbolista jugador = futbolistaService.createJugador(j);
+        return "redirect:/futbolistas/" + jugador.getId();
     }    
     
     @GetMapping ("{id}/jugador/add")
     public String addJugador (@PathVariable Long id,Model model){
-        model.addAttribute("jugador", new Jugador());
+
+        model.addAttribute("jugador", new JugadorEditDTO());
         model.addAttribute("equipo", equipoService.findById(id));
         return "add_jugador";
     }

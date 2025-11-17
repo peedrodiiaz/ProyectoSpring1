@@ -204,7 +204,6 @@ public class FutbolistaService {
     
     public Futbolista createJugador(JugadorEditDTO dto) {
         Jugador j = new Jugador();
-
         j.setNombre(dto.getNombre());
         j.setApellidos(dto.getApellidos());
         j.setImgFutbolista(dto.getImgFutbolista());
@@ -214,18 +213,24 @@ public class FutbolistaService {
         j.setNumCamiseta(dto.getNumCamiseta());
         j.setSalarioMensualBase(dto.getSalarioMensualBase());
         j.setPiernaBuena(dto.getPiernaBuena());
-        if (j.getEstadisticas() instanceof EstadisticasJugador){
-            EstadisticasJugador stats = (EstadisticasJugador) j.getEstadisticas();
-            stats.setAsistencias(dto.getAsistencias());
-            stats.setGoles(dto.getGoles());
-            stats.setCalificacion(dto.getCalificacion());
-            stats.setMinJugados(dto.getMinJugados());
-            stats.setTarAmarilla(dto.getTarAmarilla());
-            stats.setTarRoja(dto.getTarRoja());
-            
+        j.setPosicion(dto.getPosicion());
+
+        EstadisticasJugador stats = new EstadisticasJugador();
+        stats.setAsistencias(dto.getAsistencias());
+        stats.setGoles(dto.getGoles());
+        stats.setCalificacion(dto.getCalificacion());
+        stats.setMinJugados(dto.getMinJugados());
+        stats.setTarAmarilla(dto.getTarAmarilla());
+        stats.setTarRoja(dto.getTarRoja());
+
+        stats.setFutbolista(j);
+        j.setEstadisticas(stats);
+
+        if (dto.getEquipoId() == null) {
+            throw new IllegalArgumentException("equipoId es obligatorio al crear un Jugador");
         }
-
-
+        j.setEquipo(equipoService.findById(dto.getEquipoId()));
+        
         return futbolistaRepository.save(j);
     }
     

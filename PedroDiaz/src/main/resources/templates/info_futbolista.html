@@ -70,7 +70,10 @@
 								<p class="mb-1">
 									<i class="bi bi-flag-fill text-muted"></i>
 									<strong>Equipo:</strong>
-									<a th:href="@{'/equipos/' + ${futbolista.equipo.id}}" th:text="${futbolista.equipo.nombre}"></a>
+									<span th:if="${futbolista != null and futbolista.equipo != null}">
+										<a th:href="@{'/equipos/' + ${futbolista.equipo.id}}" th:text="${futbolista.equipo.nombre}"></a>
+									</span>
+									<span th:unless="${futbolista != null and futbolista.equipo != null}">Sin equipo</span>
 								</p>
 								<p class="mb-1">
 									<i class="bi bi-globe2 text-muted"></i>
@@ -198,7 +201,7 @@
 						</div>
 
 						<div class="mt-4 d-flex gap-2 flex-wrap">
-							<a th:href="@{'/equipos/' + ${futbolista.equipo.id}}" class="btn btn-outline-secondary">Volver al equipo</a>
+							<a th:if="${futbolista != null and futbolista.equipo != null}" th:href="@{'/equipos/' + ${futbolista.equipo.id}}" class="btn btn-outline-secondary">Volver al equipo</a>
 							
 						</div>
 					</div>

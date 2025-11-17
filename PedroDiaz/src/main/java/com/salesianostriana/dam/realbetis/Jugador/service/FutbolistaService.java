@@ -88,6 +88,7 @@ public class FutbolistaService {
             jugador.setPosicion(dto.getPosicion());
             
             jugador.setEquipo(equipoService.findById(dto.getEquipoId()));
+            jugador.setNacionalidad(dto.getNacionalidad());
             
             
             // Actualizar estadísticas
@@ -132,6 +133,7 @@ public class FutbolistaService {
         portero.setImgFutbolista(dto.getImgFutbolista());
         portero.setSalarioMensualBase(dto.getSalarioMensualBase());
         portero.setManoDominante(dto.getManoDominante());
+        portero.setNacionalidad(dto.getNacionalidad());
         
     
         if (dto.getEquipoId() != null) {
@@ -200,16 +202,31 @@ public class FutbolistaService {
     }
 
     
-    public Futbolista createJugador(Jugador jugador) {
-        if (jugador.getEstadisticas() == null) {
-            EstadisticasJugador estadisticas = new EstadisticasJugador();
-            estadisticas.setFutbolista(jugador);
-            jugador.setEstadisticas(estadisticas);
+    public Futbolista createJugador(JugadorEditDTO dto) {
+        Jugador j = new Jugador();
+
+        j.setNombre(dto.getNombre());
+        j.setApellidos(dto.getApellidos());
+        j.setImgFutbolista(dto.getImgFutbolista());
+        j.setFechaNacimiento(dto.getFechaNacimiento());
+        j.setFechaInicioContrato(dto.getFechaInicioContrato());
+        j.setNacionalidad(dto.getNacionalidad());
+        j.setNumCamiseta(dto.getNumCamiseta());
+        j.setSalarioMensualBase(dto.getSalarioMensualBase());
+        j.setPiernaBuena(dto.getPiernaBuena());
+        if (j.getEstadisticas() instanceof EstadisticasJugador){
+            EstadisticasJugador stats = (EstadisticasJugador) j.getEstadisticas();
+            stats.setAsistencias(dto.getAsistencias());
+            stats.setGoles(dto.getGoles());
+            stats.setCalificacion(dto.getCalificacion());
+            stats.setMinJugados(dto.getMinJugados());
+            stats.setTarAmarilla(dto.getTarAmarilla());
+            stats.setTarRoja(dto.getTarRoja());
+            
         }
-        if (jugador.getEquipo() != null && jugador.getEquipo().getId() != null) {
-            jugador.setEquipo(equipoService.findById(jugador.getEquipo().getId()));
-        }
-        return futbolistaRepository.save(jugador);
+
+
+        return futbolistaRepository.save(j);
     }
     
 }

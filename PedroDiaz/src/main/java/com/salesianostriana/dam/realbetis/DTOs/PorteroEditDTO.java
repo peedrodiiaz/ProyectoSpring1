@@ -29,7 +29,7 @@ public class PorteroEditDTO {
     private String imgFutbolista;
     private double salarioMensualBase;
     private Long equipoId;
-    
+    private String nacionalidad;
     // Estadísticas del Portero
     private Long estadisticasId;
     private double minJugados;
@@ -52,6 +52,7 @@ public class PorteroEditDTO {
             .imgFutbolista(portero.getImgFutbolista())
             .salarioMensualBase(portero.getSalarioMensualBase())
             .equipoId(portero.getEquipo().getId())
+            .nacionalidad(portero.getNacionalidad())
             .estadisticasId(stats.getId())
             .minJugados(stats.getMinJugados())
             .paradas(stats.getParadas())

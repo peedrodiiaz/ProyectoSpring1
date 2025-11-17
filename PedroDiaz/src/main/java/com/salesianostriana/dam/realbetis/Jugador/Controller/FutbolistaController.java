@@ -106,10 +106,9 @@ public class FutbolistaController {
     }
     
 
-    //ANIADIR
+    // ANIADIR
     @PostMapping ("{id}/jugador/add")
-    public String addJugador(@PathVariable Long id, @ModelAttribute("jugador") Jugador j){
-
+    public String addJugador(@PathVariable Long id, @ModelAttribute("jugador") JugadorEditDTO j){
         futbolistaService.createJugador(j);
         System.out.println( j );
         System.out.println( "holaaaaaaaa" );

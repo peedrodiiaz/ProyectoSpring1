@@ -26,7 +26,7 @@ public class JugadorEditDTO {
     private String imgFutbolista;
     private double salarioMensualBase;
     private Long equipoId;
-    
+    private String nacionalidad;
     // Estadísticas del Jugador
     private Long estadisticasId;
     private double minJugados;
@@ -50,6 +50,7 @@ public class JugadorEditDTO {
             .imgFutbolista(jugador.getImgFutbolista())
             .salarioMensualBase(jugador.getSalarioMensualBase())
             .equipoId(jugador.getEquipo().getId())
+            .nacionalidad(jugador.getNacionalidad())
             .estadisticasId(stats.getId())
             .minJugados(stats.getMinJugados())
             .goles(stats.getGoles())

@@ -3,215 +3,343 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title th:text="${futbolista.nombre} + ' ' + ${futbolista.apellidos} + ' - Ficha'">Ficha Futbolista</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+	<title
+	th:text="${futbolista.nombre} + ' ' + ${futbolista.apellidos} + ' - Ficha'"
+	>
+	Ficha Futbolista
+	</title>
+	<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	/>
+	<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+	rel="stylesheet"
+	/>
 	<link rel="stylesheet" th:href="@{/css/info-futbolista.css}" />
 	<link rel="stylesheet" th:href="@{/css/MainController/header-betis.css}" />
 	<link rel="stylesheet" th:href="@{/css/info-equipo.css}" />
 </head>
 <body class="bg-light">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container">
-			<a class="navbar-brand fw-bold text-success" th:href="@{/}">Real Betis</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-					aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="mainNav">
-				<ul class="navbar-nav ms-auto">
-					<li class="nav-item">
-						<a class="nav-link" th:href="@{/}">Inicio</a>
-					</li>
-				</ul>
-			</div>
+	<div class="container">
+		<a class="navbar-brand fw-bold text-success" th:href="@{/}"
+		>Real Betis</a
+		>
+		<button
+		class="navbar-toggler"
+		type="button"
+		data-bs-toggle="collapse"
+		data-bs-target="#mainNav"
+		aria-controls="mainNav"
+		aria-expanded="false"
+		aria-label="Toggle navigation"
+		>
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="mainNav">
+		<ul class="navbar-nav ms-auto">
+			<li class="nav-item">
+			<a class="nav-link" th:href="@{/}">Inicio</a>
+			</li>
+		</ul>
 		</div>
+	</div>
 	</nav>
 
 	<header class="header-betis py-4">
-		<div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
-			<div class="d-flex align-items-center">
-				<img th:if="${futbolista != null and futbolista.equipo != null and futbolista.equipo.imgEquipo != null}"
-					th:src="@{${futbolista.equipo.imgEquipo}}"
-					alt="Logo equipo" class="logo-betis me-3" />
-				<img th:if="${futbolista == null or futbolista.equipo == null or futbolista.equipo.imgEquipo == null}"
-					th:src="@{/img/Escudo_Betis.svg}"
-					alt="Logo Real Betis" class="logo-betis me-3 animate__animated animate__bounceIn" />
-				<div>
-					<h1 class="title-betis" th:text="${futbolista != null && futbolista.equipo != null ? futbolista.equipo.nombre : 'Real Betis'}">Equipo</h1>
-					<p class="subtitle-betis mb-0" th:text="${futbolista != null && futbolista.equipo != null ? futbolista.equipo.categoria : ''}">Categoría</p>
-				</div>
-			</div>
+	<div
+		class="container d-flex flex-column flex-md-row align-items-center justify-content-between"
+	>
+		<div class="d-flex align-items-center">
+		<img
+			th:if="${futbolista != null and futbolista.equipo != null and futbolista.equipo.imgEquipo != null}"
+			th:src="@{${futbolista.equipo.imgEquipo}}"
+			alt="Logo equipo"
+			class="logo-betis me-3"
+		/>
+		<img
+			th:if="${futbolista == null or futbolista.equipo == null or futbolista.equipo.imgEquipo == null}"
+			th:src="@{/img/Escudo_Betis.svg}"
+			alt="Logo Real Betis"
+			class="logo-betis me-3 animate__animated animate__bounceIn"
+		/>
+		<div>
+			<h1
+			class="title-betis"
+			th:text="${futbolista != null && futbolista.equipo != null ? futbolista.equipo.nombre : 'Real Betis'}"
+			>
+			Equipo
+			</h1>
+			<p
+			class="subtitle-betis mb-0"
+			th:text="${futbolista != null && futbolista.equipo != null ? futbolista.equipo.categoria : ''}"
+			>
+			Categoría
+			</p>
 		</div>
-		<img th:src="@{/img/Escudo_Betis.svg}" alt="escudo decorativo" class="escudo-decorativo" />
+		</div>
+	</div>
+	<img
+		th:src="@{/img/Escudo_Betis.svg}"
+		alt="escudo decorativo"
+		class="escudo-decorativo"
+	/>
 	</header>
 
 	<div class="container py-4">
-		<div class="card shadow-sm player-profile ps-5">
-			<div class="row g-0">
-				<div class="col-lg-5 d-flex align-items-center justify-content-center profile-left">
-					<div class="photo-wrap text-center">
-						<img th:src="${futbolista.imgFutbolista}"
-							th:alt="${futbolista.nombre} + ' ' + ${futbolista.apellidos}"
-							class="img-fluid rounded-circle player-photo shadow-sm" />
-						<h3 class="mt-3" th:text="${futbolista.nombre} + ' ' + ${futbolista.apellidos}"></h3>
-						<div>
-							<span class="badge badge-betis-green position-badge"
-								th:text="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador) ? futbolista.posicion : 'Portero'}"></span>
-							<span class="badge badge-betis-white ms-2" th:text="'#' + ${futbolista.numCamiseta}"></span>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-7">
-					<div class="card-body px-4 py-4">
-						<div class="d-flex justify-content-between align-items-start mb-3">
-							<div class="info-section flex-grow-1">
-								<p class="mb-1">
-									<i class="bi bi-flag-fill text-muted"></i>
-									<strong>Equipo:</strong>
-									<span th:if="${futbolista != null and futbolista.equipo != null}">
-										<a th:href="@{'/equipos/' + ${futbolista.equipo.id}}" th:text="${futbolista.equipo.nombre}"></a>
-									</span>
-									<span th:unless="${futbolista != null and futbolista.equipo != null}">Sin equipo</span>
-								</p>
-								<p class="mb-1">
-									<i class="bi bi-globe2 text-muted"></i>
-									<strong>Nacionalidad:</strong>
-									<span th:text="${futbolista.nacionalidad}"></span>
-								</p>
-								<p class="mb-1">
-									<i class="bi bi-calendar-event text-muted"></i>
-									<strong>Fecha de nacimiento:</strong>
-									<span th:text="${futbolista.fechaNacimiento}"></span>
-								</p>
-								<p class="mb-1">
-									<i class="bi bi-calendar-event text-muted"></i>
-									<strong>Fecha inicio contrato</strong>
-									<span th:text="${futbolista.fechaInicioContrato}"></span>
-								</p>
-								<p class="mb-1">
-									<i class="bi bi-person-fill text-muted"></i>
-									<strong>Pierna buena:</strong>
-									<span th:text="${futbolista.piernaBuena}"></span>
-								</p>
-
-								<div th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Portero)}">
-									<p class="mb-1">
-										<i class="bi bi-hand-index-thumb-fill text-muted"></i>
-										<strong>Mano dominante:</strong>
-										<span th:text="${(futbolista.manoDominante != null) ? futbolista.manoDominante : 'Desconocida'}"></span>
-									</p>
-								</div>
-
-								<hr class="my-3" />
-
-								<div class="salary-section">
-									<h6 class="text-muted mb-2"><i class="bi bi-cash-coin"></i> Información Salarial</h6>
-									<p class="mb-1">
-										<strong>Salario Base:</strong>
-										<span class="text-success fw-bold" th:text="${#numbers.formatDecimal(futbolista.salarioMensualBase, 1, 'POINT', 0, 'POINT')} + ' €/mes'"></span>
-									</p>
-									<p class="mb-1">
-										<strong>Bonus por Rendimiento:</strong>
-										<span class="text-primary fw-bold" th:text="${#numbers.formatDecimal(bonus, 1, 'POINT', 0, 'POINT')} + ' €'"></span>
-									</p>
-									<p class="mb-2">
-										<strong>Salario Total:</strong>
-										<span class="badge badge-betis-green fs-6" th:text="${#numbers.formatDecimal(sueldoFinal, 1, 'POINT', 0, 'POINT')} + ' €/mes'"></span>
-									</p>
-									<small class="text-muted fst-italic">
-										<span th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador)}">
-											Bonus: 1.000€/gol + 500€/asistencia   -250/Tarjeta Amarilla -450/Tarjeta Roja
-										</span>
-										<span th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Portero)}">
-											Bonus: 800€/portería a cero
-										</span>
-									</small>
-								</div>
-							</div>
-
-							<div class="text-end">
-								<a th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Portero)}"
-									th:href="@{'/futbolistas/portero/' + ${futbolista.id} + '/edit'}"
-									class="btn btn-outline-primary btn-sm">Editar</a>
-
-								<a th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador)}"
-									th:href="@{'/futbolistas/jugador/' + ${futbolista.id} + '/edit'}"
-									class="btn btn-outline-primary btn-sm">Editar</a>
-
-							</div>
-						</div>
-
-						<hr/>
-
-						<h5 class="mb-3">Estadísticas</h5>
-
-						<div class="row gy-3">
-							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas != null}">
-								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${#numbers.formatInteger(estadisticas.minJugados, 0)}"></div>
-									<div class="stat-label">Minutos</div>
-								</div>
-							</div>
-
-							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)}">
-								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${estadisticas.paradas}"></div>
-									<div class="stat-label">Paradas</div>
-								</div>
-							</div>
-
-							<div class="col-6 col-sm-4 col-md-3" th:if="${esPortero}">
-								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${porteriasACero}"></div>
-									<div class="stat-label">Porterías 0</div>
-								</div>
-							</div>
-
-							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}">
-								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${estadisticas.goles}"></div>
-									<div class="stat-label">Goles</div>
-								</div>
-							</div>
-							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}">
-								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${estadisticas.asistencias}"></div>
-									<div class="stat-label">Asistencias</div>
-								</div>
-							</div>
-
-							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas != null}">
-								<div class="stat-card p-2 text-center">
-									<div class="stat-value" th:text="${#numbers.formatDecimal(estadisticas.calificacion, 1, 1)}"></div>
-									<div class="stat-label">Calificación</div>
-								</div>
-							</div>
-
-							<div class="col-6 col-sm-4 col-md-3" th:if="${estadisticas != null}">
-								<div class="stat-card p-2 text-center text-muted small">
-									<div class="stat-label">Tarjetas</div>
-									<div>
-										<i class="bi bi-square-half"></i>
-										<span th:text="${estadisticas.tarAmarilla}"></span> / <span th:text="${estadisticas.tarRoja}"></span>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="mt-4 d-flex gap-2 flex-wrap">
-							<a th:if="${futbolista != null and futbolista.equipo != null}" th:href="@{'/equipos/' + ${futbolista.equipo.id}}" class="btn btn-outline-secondary">Volver al equipo</a>
-							
-						</div>
-					</div>
-				</div>
+	<div class="card shadow-sm player-profile ps-5">
+		<div class="row g-0">
+		<div
+			class="col-lg-5 d-flex align-items-center justify-content-center profile-left"
+		>
+			<div class="photo-wrap text-center">
+			<img
+				th:src="${futbolista.imgFutbolista}"
+				th:alt="${futbolista.nombre} + ' ' + ${futbolista.apellidos}"
+				class="img-fluid rounded-circle player-photo shadow-sm"
+			/>
+			<h3
+				class="mt-3"
+				th:text="${futbolista.nombre} + ' ' + ${futbolista.apellidos}"
+			></h3>
+			<div>
+				<span
+				class="badge badge-betis-green position-badge"
+				th:text="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador) ? futbolista.posicion : 'Portero'}"
+				></span>
+				<span
+				class="badge badge-betis-white ms-2"
+				th:text="'#' + ${futbolista.numCamiseta}"
+				></span>
+			</div>
 			</div>
 		</div>
+
+		<div class="col-lg-7">
+			<div class="card-body px-4 py-4">
+			<div
+				class="d-flex justify-content-between align-items-start mb-3"
+			>
+				<div class="info-section flex-grow-1">
+				<p class="mb-1">
+					<i class="bi bi-flag-fill text-muted"></i>
+					<strong>Equipo:</strong>
+					<span
+					th:if="${futbolista != null and futbolista.equipo != null}"
+					>
+					<a
+						th:href="@{'/equipos/' + ${futbolista.equipo.id}}"
+						th:text="${futbolista.equipo.nombre}"
+					></a>
+					</span>
+					<span
+					th:unless="${futbolista != null and futbolista.equipo != null}"
+					>Sin equipo</span
+					>
+				</p>
+				<p class="mb-1">
+					<i class="bi bi-globe2 text-muted"></i>
+					<strong>Nacionalidad:</strong>
+					<span th:text="${futbolista.nacionalidad}"></span>
+				</p>
+				<p class="mb-1">
+					<i class="bi bi-calendar-event text-muted"></i>
+					<strong>Fecha de nacimiento:</strong>
+					<span th:text="${futbolista.fechaNacimiento}"></span>
+				</p>
+				<p class="mb-1">
+					<i class="bi bi-calendar-event text-muted"></i>
+					<strong>Fecha inicio contrato</strong>
+					<span th:text="${futbolista.fechaInicioContrato}"></span>
+				</p>
+				<p class="mb-1">
+					<i class="bi bi-person-fill text-muted"></i>
+					<strong>Pierna buena:</strong>
+					<span th:text="${futbolista.piernaBuena}"></span>
+				</p>
+
+				<div
+					th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Portero)}"
+				>
+					<p class="mb-1">
+					<i class="bi bi-hand-index-thumb-fill text-muted"></i>
+					<strong>Mano dominante:</strong>
+					<span
+						th:text="${(futbolista.manoDominante != null) ? futbolista.manoDominante : 'Desconocida'}"
+					></span>
+					</p>
+				</div>
+
+				<hr class="my-3" />
+
+				<div class="salary-section">
+					<h6 class="text-muted mb-2">
+					<i class="bi bi-cash-coin"></i> Información Salarial
+					</h6>
+					<p class="mb-1">
+					<strong>Salario Base:</strong>
+					<span
+						class="text-success fw-bold"
+						th:text="${#numbers.formatDecimal(futbolista.salarioMensualBase, 1, 'POINT', 0, 'POINT')} + ' €/mes'"
+					></span>
+					</p>
+					<p class="mb-1">
+					<strong>Bonus por Rendimiento:</strong>
+					<span
+						class="text-primary fw-bold"
+						th:text="${#numbers.formatDecimal(bonus, 1, 'POINT', 0, 'POINT')} + ' €'"
+					></span>
+					</p>
+					<p class="mb-2">
+					<strong>Salario Total:</strong>
+					<span
+						class="badge badge-betis-green fs-6"
+						th:text="${#numbers.formatDecimal(sueldoFinal, 1, 'POINT', 0, 'POINT')} + ' €/mes'"
+					></span>
+					</p>
+					<small class="text-muted fst-italic">
+					<span
+						th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador)}"
+					>
+						Bonus: 1.000€/gol + 500€/asistencia -250/Tarjeta
+						Amarilla -450/Tarjeta Roja
+					</span>
+					<span
+						th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Portero)}"
+					>
+						Bonus: 800€/portería a cero
+					</span>
+					</small>
+				</div>
+				</div>
+
+				<div class="text-end">
+				<a
+					th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Portero)}"
+					th:href="@{'/futbolistas/portero/' + ${futbolista.id} + '/edit'}"
+					class="btn btn-outline-primary btn-sm"
+					>Editar</a
+				>
+
+				<a
+					th:if="${futbolista instanceof T(com.salesianostriana.dam.realbetis.Jugador.Model.Jugador)}"
+					th:href="@{'/futbolistas/jugador/' + ${futbolista.id} + '/edit'}"
+					class="btn btn-outline-primary btn-sm"
+					>Editar</a
+				>
+				</div>
+			</div>
+
+			<hr />
+
+			<h5 class="mb-3">Estadísticas</h5>
+
+			<div class="row gy-3">
+				<div
+				class="col-6 col-sm-4 col-md-3"
+				th:if="${estadisticas != null}"
+				>
+				<div class="stat-card p-2 text-center">
+					<div
+					class="stat-value"
+					th:text="${#numbers.formatInteger(estadisticas.minJugados, 0)}"
+					></div>
+					<div class="stat-label">Minutos</div>
+				</div>
+				</div>
+
+				<div
+				class="col-6 col-sm-4 col-md-3"
+				th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)}"
+				>
+				<div class="stat-card p-2 text-center">
+					<div
+					class="stat-value"
+					th:text="${estadisticas.paradas}"
+					></div>
+					<div class="stat-label">Paradas</div>
+				</div>
+				</div>
+
+				<div class="col-6 col-sm-4 col-md-3" th:if="${esPortero}">
+				<div class="stat-card p-2 text-center">
+					<div class="stat-value" th:text="${porteriasACero}"></div>
+					<div class="stat-label">Porterías 0</div>
+				</div>
+				</div>
+
+				<div
+				class="col-6 col-sm-4 col-md-3"
+				th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}"
+				>
+				<div class="stat-card p-2 text-center">
+					<div
+					class="stat-value"
+					th:text="${estadisticas.goles}"
+					></div>
+					<div class="stat-label">Goles</div>
+				</div>
+				</div>
+				<div
+				class="col-6 col-sm-4 col-md-3"
+				th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}"
+				>
+				<div class="stat-card p-2 text-center">
+					<div
+					class="stat-value"
+					th:text="${estadisticas.asistencias}"
+					></div>
+					<div class="stat-label">Asistencias</div>
+				</div>
+				</div>
+
+				<div
+				class="col-6 col-sm-4 col-md-3"
+				th:if="${estadisticas != null}"
+				>
+				<div class="stat-card p-2 text-center">
+					<div
+					class="stat-value"
+					th:text="${#numbers.formatDecimal(estadisticas.calificacion, 1, 1)}"
+					></div>
+					<div class="stat-label">Calificación</div>
+				</div>
+				</div>
+
+				<div
+				class="col-6 col-sm-4 col-md-3"
+				th:if="${estadisticas != null}"
+				>
+				<div class="stat-card p-2 text-center text-muted small">
+					<div class="stat-label">Tarjetas</div>
+					<div>
+					<i class="bi bi-square-half"></i>
+					<span th:text="${estadisticas.tarAmarilla}"></span> /
+					<span th:text="${estadisticas.tarRoja}"></span>
+					</div>
+				</div>
+				</div>
+			</div>
+
+			<div class="mt-4 d-flex gap-2 flex-wrap">
+				<a
+				th:if="${futbolista != null and futbolista.equipo != null}"
+				th:href="@{'/equipos/' + ${futbolista.equipo.id}}"
+				class="btn btn-outline-secondary"
+				>Volver al equipo</a
+				>
+			</div>
+			</div>
+		</div>
+		</div>
+	</div>
 	</div>
 
 	<footer class="bg-light py-3 mt-5">
-		<div class="container text-center text-muted small">&copy; 2025 Real Betis Balompié</div>
+	<div class="container text-center text-muted small">
+		&copy; 2025 Real Betis Balompié
+	</div>
 	</footer>
 </body>
 </html>

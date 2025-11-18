@@ -74,9 +74,10 @@ public class FutbolistaService {
             .map(f -> (Jugador) f)
             .filter(f -> !f.getId().equals(id))
             .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
-        
+            if (!hacer) {   
+                throw new IllegalArgumentException("Dos jugadores no pueden tener el mismo dorsal en el mismo equipo");
+            }
 
-        if (hacer) {
             jugador.setNombre(dto.getNombre());
             jugador.setApellidos(dto.getApellidos());
             jugador.setNumCamiseta(dto.getNumCamiseta());
@@ -101,9 +102,7 @@ public class FutbolistaService {
                 stats.setTarRoja(dto.getTarRoja());
                 stats.setCalificacion(dto.getCalificacion());
             }
-        }else {
-            return null;
-        }            
+        
         return futbolistaRepository.save(jugador);
 
 
@@ -121,7 +120,9 @@ public class FutbolistaService {
             .filter(f -> !f.getId().equals(id))
             .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
     
-        if (hacer) {
+        if (!hacer) {
+            throw new IllegalArgumentException("Dos jugadores no pueden tener el mismo dorsal en el mismo equipo");
+        }
             
         
         portero.setNombre(dto.getNombre());
@@ -149,9 +150,7 @@ public class FutbolistaService {
             stats.setTarRoja(dto.getTarRoja());
             stats.setCalificacion(dto.getCalificacion());
         }
-    }else{
-        return null;
-    }
+    
         
         
         return futbolistaRepository.save(portero);
@@ -203,6 +202,15 @@ public class FutbolistaService {
 
     
     public Futbolista createJugador(JugadorEditDTO dto) {
+        List <Futbolista> listaFutbolistas = equipoService.findById(dto.getEquipoId()).getListFutbolistas();
+        boolean hacer = listaFutbolistas.stream()
+            .filter(f -> f instanceof Jugador)
+            .map(f -> (Jugador) f)
+            .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
+        if (!hacer) {
+            throw new IllegalArgumentException("Ya existe un jugador con el dorsal " + dto.getNumCamiseta() + " en el equipo con ID " + dto.getEquipoId());
+        }
+
         Jugador j = new Jugador();
         j.setNombre(dto.getNombre());
         j.setApellidos(dto.getApellidos());
@@ -233,7 +241,126 @@ public class FutbolistaService {
         
         return futbolistaRepository.save(j);
     }
-    
+
+    public Portero createPortero (PorteroEditDTO dto){
+        List <Futbolista> listaFutbolistas = equipoService.findById(dto.getEquipoId()).getListFutbolistas();
+        boolean hacer = listaFutbolistas.stream()
+            .filter(f -> f instanceof Portero)
+            .map(f -> (Portero) f)
+            .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
+        if (!hacer) {
+            throw new IllegalArgumentException("Ya existe un portero con el dorsal " + dto.getNumCamiseta() + " en el equipo con ID " + dto.getEquipoId());
+        }
+
+        Portero p = new Portero();
+        p.setNombre(dto.getNombre());
+        p.setApellidos(dto.getApellidos());
+        p.setImgFutbolista(dto.getImgFutbolista());
+        p.setFechaNacimiento(dto.getFechaNacimiento());
+        p.setFechaInicioContrato(dto.getFechaInicioContrato());
+        p.setNacionalidad(dto.getNacionalidad());
+        p.setNumCamiseta(dto.getNumCamiseta());
+        p.setSalarioMensualBase(dto.getSalarioMensualBase());
+        p.setPiernaBuena(dto.getPiernaBuena());
+        p.setManoDominante(dto.getManoDominante());
+
+        EstadisticasPortero stats = new EstadisticasPortero();
+        stats.setCalificacion(dto.getCalificacion());
+        stats.setMinJugados(dto.getMinJugados());
+        stats.setParadas(dto.getParadas());
+        stats.setPorteriasACero(dto.getPorteriasACero());
+        stats.setFutbolista(p);
+        p.setEstadisticas(stats);
+        if (dto.getEquipoId() == null) {
+            throw new IllegalArgumentException("equipoId es obligatorio al crear un Portero");
+        }
+        p.setEquipo(equipoService.findById(dto.getEquipoId()));
+        return futbolistaRepository.save(p);
+
+    }
+    //CALCULO CALIFICACION FUTBOLISTA
+    // Cálculo  Jugador 
+    private double calcularCalificacionJugador(Long id) {
+        Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
+        int goles, asistencias, tarAmarilla, tarRoja;
+        double minJugados, golesPorPartidoSuma, asistenciaPorPartidoSuma, amarillasResta, rojaResta;
+
+        EstadisticasJugador ej = (EstadisticasJugador) estadisticas;
+        goles = ej.getGoles();
+        asistencias = ej.getAsistencias();
+        minJugados = ej.getMinJugados();
+        tarAmarilla = ej.getTarAmarilla();
+        tarRoja = ej.getTarRoja();
+
+        double partidos = (minJugados > 0) ? (minJugados / 90.0) : 0.0;
+        double golesPorPartido = (partidos > 0) ? (goles / partidos) : 0.0;
+        double asistenciasPorPartido = (partidos > 0) ? (asistencias / partidos) : 0.0;
+
+        golesPorPartidoSuma = 1.9;
+        asistenciaPorPartidoSuma = 0.5;
+        amarillasResta = 0.2;
+        rojaResta = 0.5;
+
+        return (golesPorPartido * golesPorPartidoSuma)
+                + (asistenciasPorPartido * asistenciaPorPartidoSuma)
+                - (tarAmarilla * amarillasResta)
+                - (tarRoja * rojaResta);
+    }
+
+    // Cálculo PorteroO
+    private double calcularCalificacionPortero(Long id) {
+        Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
+        int paradas, porteriasACero, tarAmarilla, tarRoja;
+        double minJugados, partidos, paradasPorPartido, porteriasACeroPorPartido;
+        double paradasPorPartidoSuma, porteriasPorPartidoSuma, amarillasResta, rojaResta;
+
+        if (!(estadisticas instanceof EstadisticasPortero))
+            return 0.0;
+
+        EstadisticasPortero ep = (EstadisticasPortero) estadisticas;
+        paradas = ep.getParadas();
+        porteriasACero = ep.getPorteriasACero();
+        minJugados = ep.getMinJugados();
+        tarAmarilla = ep.getTarAmarilla();
+        tarRoja = ep.getTarRoja();
+
+        partidos = (minJugados > 0) ? (minJugados / 90.0) : 0.0;
+        paradasPorPartido = (partidos > 0) ? (paradas / partidos) : 0.0;
+        porteriasACeroPorPartido = (partidos > 0) ? (porteriasACero / partidos) : 0.0;
+
+        paradasPorPartidoSuma = 0.5;
+        porteriasPorPartidoSuma = 1.0;
+        amarillasResta = 0.2;
+        rojaResta = 0.5;
+
+        return (paradasPorPartido * paradasPorPartidoSuma)
+                + (porteriasACeroPorPartido * porteriasPorPartidoSuma)
+                - (tarAmarilla * amarillasResta)
+                - (tarRoja * rojaResta);
+    }
+    public double calcularCalificacionFutbolista(Long id){
+        Futbolista futbolista = findFutbolistaById(id);
+        if (futbolista instanceof Jugador) {
+            return calcularCalificacionJugador(id);
+        } else if (futbolista instanceof Portero) {
+            return calcularCalificacionPortero(id);
+        }
+        return 0.0;
+    }
+
+    public void actualizarCalificacionFutbolista(Long id){
+        double cal = calcularCalificacionFutbolista(id);
+        double resul;
+        Estadisticas estadisticas = estadisticasService.getEstadisticasByFutbolista(id);
+        if (estadisticas != null) {
+            resul = Math.min(estadisticas.getCalificacion() + cal, 10.0);
+            estadisticas.setCalificacion(resul);
+            estadisticasService.saveEstadistica(estadisticas);
+        }
+    }
+
+
+
 }
 
 

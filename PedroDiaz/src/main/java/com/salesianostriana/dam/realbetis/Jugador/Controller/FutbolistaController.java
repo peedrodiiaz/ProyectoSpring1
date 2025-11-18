@@ -43,6 +43,7 @@ public class FutbolistaController {
     
     @GetMapping("/{id}")
     public String getFutbolista(@PathVariable Long id, Model model) {
+        futbolistaService.actualizarCalificacionFutbolista(id);
         Futbolista futbolista = futbolistaService.findFutbolistaById(id);
         model.addAttribute("futbolista", futbolista);
         model.addAttribute("estadisticas", futbolista.getEstadisticas());
@@ -118,6 +119,19 @@ public class FutbolistaController {
         model.addAttribute("jugador", new JugadorEditDTO());
         model.addAttribute("equipo", equipoService.findById(id));
         return "add_jugador";
+    }
+
+    @PostMapping ("{id}/portero/add")
+    public String addPortero(@PathVariable Long id, @ModelAttribute("portero") PorteroEditDTO p){
+        Futbolista portero = futbolistaService.createPortero(p);
+        return "redirect:/futbolistas/" + portero.getId();
+    }
+    @GetMapping ("{id}/portero/add")
+    public String addPortero (@PathVariable Long id,Model model){
+
+        model.addAttribute("portero", new PorteroEditDTO());
+        model.addAttribute("equipo", equipoService.findById(id));
+        return "add_portero";
     }
 
 

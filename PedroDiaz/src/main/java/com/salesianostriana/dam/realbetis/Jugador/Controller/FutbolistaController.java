@@ -61,10 +61,9 @@ public class FutbolistaController {
         Futbolista f = futbolistaService.findFutbolistaById(id);
         Jugador jugador = (Jugador) f;
         EstadisticasJugador stats = (EstadisticasJugador) jugador.getEstadisticas();     
-        
+
         // Crear DTO con los datos actuales
         JugadorEditDTO dto = JugadorEditDTO.fromJugador(jugador, stats);
-
         model.addAttribute("jugador", dto);
         model.addAttribute("equipos", equipoService.findAll());
         return "edit_jugador";

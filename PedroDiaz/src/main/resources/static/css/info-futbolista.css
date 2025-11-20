@@ -1,4 +1,4 @@
-:root{
+:root {
     --accent: #0d6efd;
     --muted: #6c757d;
     --bg-card: #ffffff;
@@ -6,73 +6,131 @@
     --betis-white: #ffffff;
 }
 
-.player-profile{ max-width:1100px; margin:0 auto; }
-.profile-left{ background: linear-gradient(180deg, rgba(0,149,76,0.06), rgba(0,149,76,0.02)); }
-.photo-wrap{ padding:28px; }
-.player-photo{ width:170px; height:170px; object-fit:cover; border:6px solid rgba(255,255,255,0.8); }
-.position-badge{ font-size:0.85rem; padding:0.45rem 0.7rem; }
-
-
-.info-section{ 
-    max-width: 500px; 
+.player-profile {
+    max-width: 1100px;
     margin: 0 auto;
 }
-.info-section p{
+
+.profile-left {
+    background: linear-gradient(180deg, rgba(0, 149, 76, 0.06), rgba(0, 149, 76, 0.02));
+}
+
+.photo-wrap {
+    padding: 28px;
+}
+
+.player-photo {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border: 6px solid rgba(255, 255, 255, 0.8);
+}
+
+.position-badge {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.7rem;
+}
+
+.info-section {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.info-section p {
     padding: 0.4rem 0;
 }
 
-.salary-section{
-    background: linear-gradient(135deg, rgba(0,149,76,0.05), rgba(0,149,76,0.02));
+.salary-section {
+    background: linear-gradient(135deg, rgba(0, 149, 76, 0.05), rgba(0, 149, 76, 0.02));
     padding: 1rem;
     border-radius: 8px;
     border-left: 4px solid var(--betis-green);
 }
-.salary-section h6{
+
+.salary-section h6 {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-
-.badge-betis-green{ 
-    background-color: var(--betis-green) !important; 
-    color: white !important; 
+.badge-betis-green {
+    background-color: var(--betis-green) !important;
+    color: white !important;
     font-weight: 600;
 }
-.badge-betis-white{ 
-    background-color: var(--betis-white) !important; 
-    color: var(--betis-green) !important; 
+
+.badge-betis-white {
+    background-color: var(--betis-white) !important;
+    color: var(--betis-green) !important;
     border: 2px solid var(--betis-green);
     font-weight: 600;
 }
 
-.stat-card{ 
-    background:var(--bg-card); 
-    border-radius:8px; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+.stat-card {
+    background: var(--bg-card);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.stat-card:hover{
+
+.stat-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
-}
-.stat-value{ font-weight:700; font-size:1.35rem; color: var(--betis-green); }
-.stat-label{ font-size:0.85rem; color:var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-
-@media (max-width: 991px){
-    .player-profile{ margin: 0 15px; }
-    .info-section{ max-width: 100%; }
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
 }
 
-@media (max-width: 767px){
-    .player-photo{ width:140px; height:140px; }
-    .photo-wrap{ padding:18px; }
-    .stat-value{ font-size:1.15rem; }
+.stat-value {
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--betis-green);
 }
 
-@media (max-width: 575px){
-    .stat-card{ padding: 0.5rem !important; }
-    .stat-value{ font-size:1rem; }
-    .stat-label{ font-size:0.75rem; }
-    .info-section p{ padding: 0.25rem 0; font-size: 0.9rem; }
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 991px) {
+    .player-profile {
+        margin: 0 15px;
+    }
+
+    .info-section {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .player-photo {
+        width: 140px;
+        height: 140px;
+    }
+
+    .photo-wrap {
+        padding: 18px;
+    }
+
+    .stat-value {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .stat-card {
+        padding: 0.5rem !important;
+    }
+
+    .stat-value {
+        font-size: 1rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+    }
+
+    .info-section p {
+        padding: 0.25rem 0;
+        font-size: 0.9rem;
+    }
 }

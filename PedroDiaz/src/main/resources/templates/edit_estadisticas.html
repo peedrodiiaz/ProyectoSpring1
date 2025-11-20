@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Editar Estadísticas</title>
+    <link rel="stylesheet" th:href="@{/css/add-futbolista.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container py-4 add-form">
+    <h3 class="mb-3">Editar estadísticas</h3>
+
+    <form th:action="@{/estadisticas/{id}/edit(id=${estadisticas.id})}" method="post">
+        <input type="hidden" name="id" th:value="${estadisticas.id}" />
+
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Minutos jugados</label>
+                <input class="form-control" type="number" step="0.1" name="minJugados" th:value="${estadisticas.minJugados}" />
+
+                <label class="form-label mt-2">Tarjetas amarillas</label>
+                <input class="form-control" type="number" name="tarAmarilla" th:value="${estadisticas.tarAmarilla}" />
+
+                <label class="form-label mt-2">Tarjetas rojas</label>
+                <input class="form-control" type="number" name="tarRoja" th:value="${estadisticas.tarRoja}" />
+
+                <label class="form-label mt-2">Calificación</label>
+                <input class="form-control" type="number" step="0.1" name="calificacion" th:value="${estadisticas.calificacion}" />
+            </div>
+
+            <div class="col-md-6">
+                <div th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)}">
+                    <label class="form-label">Goles</label>
+                    <input class="form-control" type="number" name="goles" th:value="${(T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)).cast(estadisticas).goles}" />
+
+                    <label class="form-label mt-2">Asistencias</label>
+                    <input class="form-control" type="number" name="asistencias" th:value="${(T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasJugador)).cast(estadisticas).asistencias}" />
+                </div>
+
+                <div th:if="${estadisticas instanceof T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)}">
+                    <label class="form-label">Paradas</label>
+                    <input class="form-control" type="number" name="paradas" th:value="${(T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)).cast(estadisticas).paradas}" />
+
+                    <label class="form-label mt-2">Porterías a cero</label>
+                    <input class="form-control" type="number" name="porteriasACero" th:value="${(T(com.salesianostriana.dam.realbetis.Estadisticas.Model.EstadisticasPortero)).cast(estadisticas).porteriasACero}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button class="btn btn-primary">Guardar</button>
+            <a th:href="@{/estadisticas/{id}(id=${estadisticas.id})}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

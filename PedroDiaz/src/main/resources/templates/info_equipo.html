@@ -28,7 +28,7 @@
 
         <header class="header-betis py-4">
             <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center flex-fill">
                     <img th:if="${equipo != null and equipo.imgEquipo != null}"
                         th:src="@{${equipo.imgEquipo}}"
                         alt="Logo equipo" class="logo-betis me-3">
@@ -40,24 +40,25 @@
                         <p class="subtitle-betis mb-0" th:text="${equipo != null ? equipo.categoria : ''}">Categoría</p>
                     </div>
                 </div>
-
-                <div class="d-flex gap-2 align-items-center mt-3 mt-md-0">
-                    <a th:if="${equipo != null}" th:href="@{/futbolistas/{id}/edit(id=${equipo.id})}" class="btn nav-betis-link">Editar equipo</a>
-                    <select class="form-select form-select-sm" onchange="window.location=this.value">
-                            <option selected value="">Añadir futbolista</option>
-                            <option th:value="@{/futbolistas/{id}/jugador/add(id=${equipo.id})}">Jugador</option>
-                            <option th:value="@{/futbolistas/{id}/portero/add(id=${equipo.id})}">Portero</option>
-                            
-                        </select>
-                    
+                <div class="d-flex gap-2 align-items-center mt-3 mt-md-0 flex-fill justify-content-md-end">
+                    <a th:if="${equipo != null}" th:href="@{/equipos/{id}/edit(id=${equipo.id})}" class="btn btn-sm nav-betis-link" style="max-width:170px">Editar equipo</a>
+                    <select class="form-select form-select-sm" style="max-width:170px; font-size:0.98rem;" onchange="window.location=this.value">
+                        <option selected value="">Añadir futbolista</option>
+                        <option th:value="@{/futbolistas/{id}/jugador/add(id=${equipo.id})}">Jugador</option>
+                        <option th:value="@{/futbolistas/{id}/portero/add(id=${equipo.id})}">Portero</option>
+                    </select>
                     <div th:if="${equipo != null}">
-                        <select class="form-select form-select-sm" onchange="window.location=this.value">
+                        <select class="form-select form-select-sm" style="min-width:150px; font-size:0.98rem;" onchange="window.location=this.value">
                             <option selected value="">Elige una opción</option>
                             <option th:value="@{/equipos/{id}(id=${equipo.id})}">Sin ordenar</option>
                             <option th:value="@{/equipos/{id}/ordenarMaxGoles(id=${equipo.id})}">Ordenar por goles</option>
                             <option th:value="@{/equipos/{id}/ordenarMaxAsistencias(id=${equipo.id})}">Ordenar por asistencias</option>
                         </select>
                     </div>
+                    <div>
+                        <a th:if="${equipo != null}" th:href="@{/estadisticas/equipo/{id}/resumen(id=${equipo.id})}" class="btn btn-sm nav-betis-link" style="max-width:170px">Ver resumen estadisiticas</a>
+                    </div>
+                    
                 </div>
             </div>
 

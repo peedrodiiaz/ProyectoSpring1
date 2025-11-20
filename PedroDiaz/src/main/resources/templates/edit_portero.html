@@ -107,16 +107,18 @@
                             type="number"
                             step="0.1"
                             th:field="*{minJugados}"
+                            min="0"
                         />
 
                         <label class="form-label mt-1">Paradas</label>
-                        <input class="form-control" type="number" th:field="*{paradas}" />
+                        <input class="form-control" type="number" th:field="*{paradas}" min="0"/>
 
                         <label class="form-label mt-1">Porterías a cero</label>
                         <input
                             class="form-control"
                             type="number"
                             th:field="*{porteriasACero}"
+                            min="0"
                         />
 
                         <label class="form-label mt-1">Tarjetas amarillas</label>
@@ -124,10 +126,11 @@
                             class="form-control"
                             type="number"
                             th:field="*{tarAmarilla}"
+                            min="0"
                         />
 
                         <label class="form-label mt-1">Tarjetas rojas</label>
-                        <input class="form-control" type="number" th:field="*{tarRoja}" />
+                        <input class="form-control" type="number" th:field="*{tarRoja}" min="0" />
 
                         <label class="form-label mt-1">Calificación</label>
                         <input class="form-control" type="number" step="0.1" max="10" min="0" th:field="*{calificacion}" readonly />    

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 </head>
 <body>
-    <div class="container py-4 add-form"></div>
+    <div class="container py-4 add-form">
         <h3 class="mb-3">Añadir jugador</h3>
 
         <form id="addJugadorForm" th:action="@{/futbolistas/{id}/jugador/add(id=${equipo.id})}" th:object="${jugador}" method="post">
@@ -26,7 +26,7 @@
                     <input class="form-control" th:field="*{nacionalidad}" required />
 
                     <label class="form-label mt-2">Número</label>
-                    <input id="numCamiseta" class="form-control" type="number" th:field="*{numCamiseta}" required />
+                    <input id="numCamiseta" class="form-control" type="number" th:field="*{numCamiseta}" required min="0"/>
 
                     <label class="form-label mt-2">Fecha de nacimiento</label>
                     <input class="form-control" type="date" name="fechaNacimiento" id="fechaNacimiento" required th:value="${jugador.fechaNacimiento != null ? jugador.fechaNacimiento.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) : ''}" />
@@ -60,19 +60,19 @@
                     <h5>Estadísticas</h5>
 
                     <label class="form-label mt-1">Minutos jugados</label>
-                    <input class="form-control" type="number" step="0.1" th:field="*{minJugados}" required />
+                    <input class="form-control" type="number" step="0.1" th:field="*{minJugados}" min="0" required />
 
                     <label class="form-label mt-1">Goles</label>
-                    <input class="form-control" type="number" th:field="*{goles}" />
+                    <input class="form-control" type="number" th:field="*{goles}" min="0" />
 
                     <label class="form-label mt-1">Asistencias</label>
-                    <input class="form-control" type="number" th:field="*{asistencias}" />
+                    <input class="form-control" type="number" th:field="*{asistencias}" min="0"/>
 
                     <label class="form-label mt-1">Tarjetas amarillas</label>
-                    <input class="form-control" type="number" th:field="*{tarAmarilla}" />
+                    <input class="form-control" type="number" th:field="*{tarAmarilla}" min="0"/>
 
                     <label class="form-label mt-1">Tarjetas rojas</label>
-                    <input class="form-control" type="number" th:field="*{tarRoja}" />
+                    <input class="form-control" type="number" th:field="*{tarRoja}" min="0" />
 
                     <label class="form-label mt-1">Calificación</label>
                     <input class="form-control" type="number" step="0.1" max="10" min="0" th:field="*{calificacion}" readonly />

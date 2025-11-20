@@ -97,16 +97,18 @@
                             type="number"
                             step="0.1"
                             th:field="*{minJugados}"
+                            min="0"
                         />
                     
                         <label class="form-label mt-1">Goles</label>
-                        <input class="form-control" type="number" th:field="*{goles}" />
+                        <input class="form-control" type="number" th:field="*{goles}" min="0" />
 
                         <label class="form-label mt-1">Asistencias</label>
                         <input
                             class="form-control"
                             type="number"
                             th:field="*{asistencias}"
+                            min="0"
                         />
 
                         <label class="form-label mt-1">Tarjetas amarillas</label>
@@ -114,10 +116,11 @@
                             class="form-control"
                             type="number"
                             th:field="*{tarAmarilla}"
+                            min="0"
                         />
 
                         <label class="form-label mt-1">Tarjetas rojas</label>
-                        <input class="form-control" type="number" th:field="*{tarRoja}" />
+                        <input class="form-control" type="number" th:field="*{tarRoja}"  min="0"/>
 
                         <label class="form-label mt-1">Calificación</label>
                         <input class="form-control" type="number" step="0.1" max="10" min="0" th:field="*{calificacion}" readonly />    

@@ -70,8 +70,7 @@ public class FutbolistaService {
         Jugador jugador = (Jugador) futbolista;
         // Comprobar que ningún otro jugador (excepto el que editamos) tiene el mismo dorsal que el enviado en el DTO
         hacer = listaFutbolistas.stream()
-            .filter(f -> f instanceof Jugador)
-            .map(f -> (Jugador) f)
+
             .filter(f -> !f.getId().equals(id))
             .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
             if (!hacer) {   
@@ -115,8 +114,7 @@ public class FutbolistaService {
 
         Portero portero = (Portero) futbolista;
         boolean hacer = listaFutbolistas.stream()
-            .filter(f -> f instanceof Portero)
-            .map(f -> (Portero) f)
+
             .filter(f -> !f.getId().equals(id))
             .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
     
@@ -204,8 +202,6 @@ public class FutbolistaService {
     public Futbolista createJugador(JugadorEditDTO dto) {
         List <Futbolista> listaFutbolistas = equipoService.findById(dto.getEquipoId()).getListFutbolistas();
         boolean hacer = listaFutbolistas.stream()
-            .filter(f -> f instanceof Jugador)
-            .map(f -> (Jugador) f)
             .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
         if (!hacer) {
             throw new IllegalArgumentException("Ya existe un jugador con el dorsal " + dto.getNumCamiseta() + " en el equipo con ID " + dto.getEquipoId());
@@ -245,8 +241,6 @@ public class FutbolistaService {
     public Portero createPortero (PorteroEditDTO dto){
         List <Futbolista> listaFutbolistas = equipoService.findById(dto.getEquipoId()).getListFutbolistas();
         boolean hacer = listaFutbolistas.stream()
-            .filter(f -> f instanceof Portero)
-            .map(f -> (Portero) f)
             .allMatch(f -> f.getNumCamiseta() != dto.getNumCamiseta());
         if (!hacer) {
             throw new IllegalArgumentException("Ya existe un portero con el dorsal " + dto.getNumCamiseta() + " en el equipo con ID " + dto.getEquipoId());

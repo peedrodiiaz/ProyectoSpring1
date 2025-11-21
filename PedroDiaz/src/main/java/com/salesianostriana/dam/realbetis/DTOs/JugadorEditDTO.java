@@ -14,7 +14,6 @@ import com.salesianostriana.dam.realbetis.Jugador.Model.Jugador;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JugadorEditDTO {
-    // Datos del Jugador
     private Long id;
     private String nombre;
     private String apellidos;
@@ -27,7 +26,8 @@ public class JugadorEditDTO {
     private double salarioMensualBase;
     private Long equipoId;
     private String nacionalidad;
-    // Estadísticas del Jugador
+    
+    // Estadísticas del Jugador paraa poder crearlo 
     private Long estadisticasId;
     private double minJugados;
     private int goles;
